@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 //Import Middleware
-const response = require('../middleware/response');
+const response = require('../middlewares/response');
 
 // Import Controller
 const controller = require('../controllers/challengeController');
@@ -56,7 +56,7 @@ router.post("/:challengeId/",
 router.get('/:challenge_id',
     controller.getUsersByChallengeId,
     response.withMessage("Fetched users for the challenge", 200),
-    response.sendResponse                                    
+    response.sendResponse
 );
 
 

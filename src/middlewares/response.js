@@ -1,4 +1,3 @@
-
 module.exports.withMessage = function(message, status) {
     return function(req, res, next) {
         res.locals.message = message;

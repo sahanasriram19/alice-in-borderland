@@ -6,7 +6,7 @@ const router = express.Router();
 const controller = require("../controllers/profileController");
 
 // Import Middleware
-const response = require("../middleware/response");
+const response = require("../middlewares/response");
 
 // POST /profiles
 router.post("/",

@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 //Import Middleware
-const response = require("../middleware/response");
+const response = require("../middlewares/response");
 
 //Import Controller
 const controller = require("../controllers/inventoryController");
