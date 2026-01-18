@@ -3,6 +3,8 @@ const pool = require("../services/db");
 
 const SQLSTATEMENT = `
 
+DROP TABLE IF EXISTS UserToken;
+DROP TABLE IF EXISTS MatchOutcome;
 DROP TABLE IF EXISTS DailyClaim;
 DROP TABLE IF EXISTS UserInventory;
 DROP TABLE IF EXISTS ShopItem;
@@ -42,7 +44,7 @@ CREATE TABLE UserCompletion (
 CREATE TABLE ProfileLevel (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
-  required_total_attributes INT NOT NULL
+  required_total_power INT NOT NULL
 );
 
 CREATE TABLE CommunityGroup (
@@ -54,11 +56,9 @@ CREATE TABLE CommunityGroup (
 CREATE TABLE PlayerProfile (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL UNIQUE,
-  strength INT DEFAULT 0,
-  stamina INT DEFAULT 0,
-  focus INT DEFAULT 0,
   group_id INT DEFAULT NULL,
-  level_id INT DEFAULT NULL
+  level_id INT DEFAULT NULL,
+  power INT DEFAULT 0
 );
 
 CREATE TABLE CompetitionSeason (
@@ -74,6 +74,20 @@ CREATE TABLE GroupMatch (
   group_b_id INT NOT NULL,
   season_id INT NOT NULL,
   match_date DATE
+);
+
+CREATE TABLE MatchOutcome (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  match_id INT NOT NULL UNIQUE,
+  score_a INT DEFAULT 0,
+  score_b INT DEFAULT 0,
+  winner_group_id INT NULL
+);
+
+CREATE TABLE UserToken(
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL UNIQUE,
+  tokens INT DEFAULT 0
 );
 
 CREATE TABLE Achievement (
@@ -94,7 +108,8 @@ CREATE TABLE ShopItem (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
   description TEXT,
-  cost INT NOT NULL
+  cost INT NOT NULL,
+  power INT NOT NULL DEFAULT 0
 );
 
 CREATE TABLE UserInventory (
@@ -130,19 +145,19 @@ INSERT INTO UserCompletion (challenge_id, user_id, details) VALUES
   (2, 1, 'Took the stairs to the 5th floor. Feeling accomplished!'),
   (3, 2, 'Stayed off my phone for an hour while reading a book.');
 
-INSERT INTO ProfileLevel (name, required_total_attributes) VALUES
+INSERT INTO ProfileLevel (name, required_total_power) VALUES
   ('Beginner', 0),
-  ('Intermediate', 5),
-  ('Advanced', 12);
+  ('Intermediate', 25),
+  ('Advanced', 50);
 
 INSERT INTO CommunityGroup (name, description) VALUES
   ('Team Sunrise', 'Early birds who focus on sleep and routines'),
   ('Team Momentum', 'Fitness and productivity crew');
 
-INSERT INTO PlayerProfile (user_id, strength, stamina, focus, group_id, level_id) VALUES
-  (1, 1, 1, 1, 1, 1),
-  (2, 2, 1, 0, 2, 1),
-  (3, 1, 2, 1, 1, 2);
+INSERT INTO PlayerProfile (user_id, group_id, level_id) VALUES
+  (1, 1, 1),
+  (2, 2, 1),
+  (3, 1, 2);
 
 INSERT INTO CompetitionSeason (name, start_date, end_date) VALUES
   ('Season 1', '2026-01-01', '2026-01-31');
@@ -153,15 +168,18 @@ INSERT INTO GroupMatch (group_a_id, group_b_id, season_id, match_date) VALUES
 INSERT INTO Achievement (name, description) VALUES
   ('First Steps', 'Complete your first wellness challenge'),
   ('Shopper', 'Buy your first shop item'),
-  ('Daily Regular', 'Claim daily reward at least once');
+  ('Daily Regular', 'Claim daily reward at least once'),
+  ('First Match', 'Play 1 match'),
+  ('Veteran', 'Play 50 matches'),
+  ('Legend', 'Play 100 matches');
 
 INSERT INTO UserAchievement (user_id, achievement_id) VALUES
   (1, 1);
 
-INSERT INTO ShopItem (name, description, cost) VALUES
-  ('Energy Drink', 'Boost your vibe for the day', 20),
-  ('Focus Snack', 'A small snack to stay locked in', 15),
-  ('Gym Pass', 'Motivation to get moving', 30);
+INSERT INTO ShopItem (name, description, cost, power) VALUES
+  ('Energy Drink', 'Boost your vibe for the day', 20, 5),
+  ('Focus Snack', 'A small snack to stay locked in', 15, 3),
+  ('Gym Pass', 'Motivation to get moving', 30, 7);
 
 INSERT INTO UserInventory (user_id, item_id, quantity) VALUES
   (1, 1, 2),
@@ -172,6 +190,10 @@ INSERT INTO DailyClaim (user_id, last_claimed_at) VALUES
   (2, NULL),
   (3, NULL);
 
+INSERT INTO UserToken (user_id, tokens) VALUES
+(1, 0),
+(2, 0),
+(3, 0);
 `;
 
 const callback = (error, results) => {

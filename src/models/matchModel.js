@@ -17,4 +17,41 @@ module.exports.createMatch = (data, callback) => {
     pool.query(SQLSTATEMENT, VALUES, callback);
 };
 
+// SELECT match by id (used by loadMatch + readMatchById)
+module.exports.selectMatchById = (data, callback) => {
+  const SQLSTATEMENT = `
+    SELECT * FROM GroupMatch
+    WHERE id = ?;
+  `;
+  const VALUES = [data.match_id];
+  pool.query(SQLSTATEMENT, VALUES, callback);
+};
+
+// inventory power score (keep whatever calc you chose)
+module.exports.selectGroupInventoryPower = (data, callback) => {
+  const SQLSTATEMENT = `
+    SELECT SUM(si.power * ui.quantity) AS power_score
+    FROM PlayerProfile pp
+    LEFT JOIN UserInventory ui ON ui.user_id = pp.user_id
+    LEFT JOIN ShopItem si ON si.id = ui.item_id
+    WHERE pp.group_id = ?;
+  `;
+  const VALUES = [data.group_id];
+
+  pool.query(SQLSTATEMENT, VALUES, callback);
+};
+
+//  update MatchOutcome 
+module.exports.upsertMatchOutcome = (data, callback) => {
+  const SQLSTATEMENT = `
+    INSERT INTO MatchOutcome (match_id, score_a, score_b, winner_group_id)
+    VALUES (?, ?, ?, ?)
+    ON DUPLICATE KEY UPDATE
+      score_a = VALUES(score_a),
+      score_b = VALUES(score_b),
+      winner_group_id = VALUES(winner_group_id)
+  `;
+  const VALUES = [data.match_id, data.score_a, data.score_b, data.winner_group_id];
+  pool.query(SQLSTATEMENT, VALUES, callback);
+};
 

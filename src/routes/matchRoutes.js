@@ -15,4 +15,16 @@ router.post("/",
     response.sendResponse
 );
 
+// Resolve match result based on inventory power
+router.post(
+  "/:match_id/resolve",
+  controller.loadMatch,
+  controller.loadGroupAInventoryPower,
+  controller.loadGroupBInventoryPower,
+  controller.decideWinner,
+  controller.saveOutcome,
+  response.withMessage("Match resolved successfully", 200),
+  response.sendResponse
+);
+
 module.exports = router;

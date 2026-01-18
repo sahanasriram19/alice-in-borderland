@@ -4,8 +4,8 @@ const pool = require('../services/db');
 // Create Profile
 module.exports.createProfile = (data, callback) => {
     const SQLSTATEMENT = `
-        INSERT INTO PlayerProfile (user_id, strength, stamina, focus)
-        VALUES (?, 0, 0, 0);
+        INSERT INTO PlayerProfile (user_id, power)
+        VALUES (?, 0);
     `;
     const VALUES = [data.user_id];
 
