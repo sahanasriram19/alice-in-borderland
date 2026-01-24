@@ -1,29 +1,52 @@
 //Import pool (Database Connection)
 const pool = require("../services/db");
 
-const SQLSTATEMENT = `
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
-DROP TABLE IF EXISTS UserToken;
-DROP TABLE IF EXISTS MatchOutcome;
-DROP TABLE IF EXISTS DailyClaim;
-DROP TABLE IF EXISTS UserInventory;
-DROP TABLE IF EXISTS ShopItem;
-DROP TABLE IF EXISTS UserAchievement;
-DROP TABLE IF EXISTS Achievement;
+const callback = (error, results, fields) => {
+  if (error) {
+    console.error("Error creating tables:", error);
+  } else {
+    console.log("Tables created successfully");
+  }
+  process.exit();
+}
 
-DROP TABLE IF EXISTS GroupMatch;
-DROP TABLE IF EXISTS CompetitionSeason;
-DROP TABLE IF EXISTS PlayerProfile;
-DROP TABLE IF EXISTS CommunityGroup;
-DROP TABLE IF EXISTS ProfileLevel;
+bcrypt.hash('1234', saltRounds, (error, hash) => {
+  if (error) {
+    console.error("Error hashing password:", error);
+  } else {
+    console.log("Hashed password:", hash);
 
-DROP TABLE IF EXISTS UserCompletion;
-DROP TABLE IF EXISTS WellnessChallenge;
-DROP TABLE IF EXISTS User;
+    const SQLSTATEMENT = `
+
+      DROP TABLE IF EXISTS UserToken;
+      DROP TABLE IF EXISTS MatchOutcome;
+      DROP TABLE IF EXISTS DailyClaim;
+      DROP TABLE IF EXISTS UserInventory;
+      DROP TABLE IF EXISTS ShopItem;
+      DROP TABLE IF EXISTS UserAchievement;
+      DROP TABLE IF EXISTS Achievement;
+
+      DROP TABLE IF EXISTS GroupMatch;
+      DROP TABLE IF EXISTS CompetitionSeason;
+      DROP TABLE IF EXISTS PlayerProfile;
+      DROP TABLE IF EXISTS CommunityGroup;
+      DROP TABLE IF EXISTS ProfileLevel;
+
+      DROP TABLE IF EXISTS UserCompletion;
+      DROP TABLE IF EXISTS WellnessChallenge;
+      DROP TABLE IF EXISTS User;
 
 CREATE TABLE User (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(255) NOT NULL,
+  email TEXT NOT NULL,
+  password TEXT NOT NULL,
+  created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  last_login_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   points INT DEFAULT 0
 );
 
@@ -126,10 +149,10 @@ CREATE TABLE DailyClaim (
   last_claimed_at DATETIME DEFAULT NULL
 );
 
-INSERT INTO User (username, points) VALUES
-  ('alice', 100),
-  ('bob', 150),
-  ('charlie', 200);
+INSERT INTO User (username, email, password, points) VALUES
+  ('alice', 'alice@example.com', '${hash}', 100),
+  ('bob', 'bob@example.com', '${hash}', 150),
+  ('charlie', 'charlie@example.com', '${hash}', 200);
 
 INSERT INTO WellnessChallenge (creator_id, description, points) VALUES
   (1, 'Sleep like a boss - Get 7+ hours of sleep', 10),
@@ -196,13 +219,6 @@ INSERT INTO UserToken (user_id, tokens) VALUES
 (3, 0);
 `;
 
-const callback = (error, results) => {
-  if (error) {
-    console.error("Error creating tables:", error);
-  } else {
-    console.log("Tables created successfully:", results);
+    pool.query(SQLSTATEMENT, callback);
   }
-  process.exit();
-};
-
-pool.query(SQLSTATEMENT, callback);
+});
