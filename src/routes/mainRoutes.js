@@ -14,6 +14,7 @@ const achievementRoutes = require("./achievementRoutes");
 const shopRoutes = require("./shopRoutes");
 const dailyClaimRoutes = require("./dailyClaimRoutes");
 const inventoryRoutes = require("./inventoryRoutes");
+const authRoutes = require("./authRoutes");
 
 // Use Routes
 router.use("/users", userRoutes);
@@ -27,6 +28,7 @@ router.use("/achievements", achievementRoutes);
 router.use("/shop", shopRoutes);
 router.use("/daily-claim", dailyClaimRoutes);
 router.use("/inventory", inventoryRoutes);
+router.use("/auth", authRoutes);
 
 module.exports = router;
 

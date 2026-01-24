@@ -68,3 +68,28 @@ module.exports.deductPoints = (data, callback) => {
   pool.query(SQLSTATEMENT, VALUES, callback);
 };
 
+// Authentication for registering new user
+module.exports.checkUsernameOrEmailExist = (data, callback) => {
+
+    const SQLSTATEMENT =  `
+    SELECT * FROM User
+    WHERE username = ? OR email = ?
+    `;
+
+    const values = [data.username, data.email];
+
+    pool.query(SQLSTATEMENT, values, callback);
+}
+
+// Register new user
+module.exports.insertUser = (data, callback) => {
+
+    const SQLSTATEMENT =  `
+    INSERT INTO User (username, email, password)
+    VALUES (?, ?, ?)
+    `;  
+    const values = [data.username, data.email, data.password];
+
+    pool.query(SQLSTATEMENT, values, callback);
+}
+
