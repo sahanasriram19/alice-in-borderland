@@ -1,0 +1,180 @@
+/* =========================
+   Authentication Forms
+   ========================= */
+
+.auth-wrapper {
+  min-height: calc(100vh - 80px);
+  /* leave space for navbar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(6, 26, 44, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(14px);
+  padding: 28px 26px 30px;
+  color: #e5e7eb;
+}
+
+.auth-card h3 {
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.auth-card .form-group label {
+  font-weight: 700;
+  color: rgba(229, 231, 235, 0.9);
+}
+
+.auth-card .btn-primary {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 1rem;
+}
+
+.auth-subtext {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: rgba(229, 231, 235, 0.7);
+}
+
+.auth-subtext a {
+  color: rgba(255, 150, 170, 0.95);
+  font-weight: 700;
+}
+
+@keyframes floatCard {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-18px) rotate(0.5deg);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+/* Faster + more noticeable */
+.auth-card {
+  animation: floatCard 3s ease-in-out infinite;
+}
+
+/* =========================
+   Player Profile Dashboard
+   ========================= */
+
+.profile-wrapper {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  animation: floatPanel 3s ease-in-out infinite;
+}
+
+.profile-grid {
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 24px;
+}
+
+/* Floating panels */
+.profile-panel {
+  background: rgba(6, 26, 44, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.65);
+  padding: 24px;
+  color: #fff;
+  backdrop-filter: blur(12px);
+}
+
+/* Slight offset so both don't float in sync */
+.profile-panel.right {
+  animation-delay: 2s;
+}
+
+/* Titles */
+.profile-panel h2 {
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+/* Info blocks */
+.info-box {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.info-label {
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+.info-value {
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+/* Inventory grid */
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+}
+
+.inventory-item {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 14px;
+  text-align: center;
+  transition: 0.25s ease;
+}
+
+.inventory-item:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
+}
+
+
+/* Floating animation */
+@keyframes floatPanel {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-14px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}

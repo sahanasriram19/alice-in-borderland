@@ -1,48 +1,87 @@
-:root
-{
-    --custom-color: #096f2a;
-    --custom-color-darker: #095521;
-    --custom-color-light: #92f7b2;
-    --custom-color-rgb: 9, 111, 42;
-    --custom-color-light-rgb: 146, 247, 178;
-    --custom-text-color: #ffffff;
+/* =========================
+   Borderland Theme: Color
+   ========================= */
+
+:root{
+--accent: #ff1f3d;
+--accent2: #ff6b6b;   /* softer */
+  --accentDark: #d92644;
 }
 
-.accordion
-{
-    --bs-accordion-btn-focus-border-color: var(--custom-color-light);
-    --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem var(--custom-color-light);
-    --bs-accordion-active-bg: var(--custom-color-light);
-    --bs-accordion-active-color: var(--custom-color-darker);
+/* NAVBAR */
+.navbar{
+  background: rgba(0,0,0,0.35) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+  backdrop-filter: blur(10px);
 }
 
-.btn-primary {
-    --bs-btn-bg: var(--custom-color);
-    --bs-btn-border-color: var(--custom-color);
-    --bs-btn-hover-bg: var(--custom-color-darker);
-    --bs-btn-hover-border-color: var(--custom-color-darker);
-    --bs-btn-active-bg: var(--custom-color-light);
-    --bs-btn-active-border-color: var(--custom-color-light);
-    --bs-btn-disabled-bg: var(--bs-success-rgb);
-    --bs-btn-disabled-border-color: var(--bs-success-rgb);
+.navbar .navbar-brand,
+.navbar .nav-link{
+  color: rgba(229,231,235,0.92) !important;
+  font-weight: 700;
 }
 
-.bg-primary {
-    --bs-bg-opacity: 1;
-    background-color: rgba(var(--custom-color-rgb),var(--bs-bg-opacity))!important;
+.navbar .nav-link:hover{
+  color: var(--accent2) !important;
 }
 
-.form-check-input:checked {
-    background-color: var(--custom-color);
-    border-color: var(--custom-color);
+.navbar .nav-link.active{
+  color: #fff !important;
+  position: relative;
 }
 
-.form-control:focus, 
-.form-check-input:focus {
-    border-color: rgba(var(--custom-color-light-rgb), 0.8);
-    box-shadow: 0 0 0 4px rgba(var(--custom-color-light-rgb), 0.6);
+.navbar .nav-link.active::after{
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 2px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 99px;
+  opacity: 0.9;
 }
 
-footer {
-    color: var(--custom-text-color);
+/* BUTTONS */
+.btn{
+  border-radius: 14px;
+  font-weight: 800;
+}
+
+.btn-primary{
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 14px 28px rgba(255, 62, 96, 0.18);
+}
+
+.btn-primary:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.btn-success{
+  background: rgba(16, 185, 129, 0.20);
+  border: 1px solid rgba(16, 185, 129, 0.40);
+  color: #d1fae5;
+}
+
+.btn-success:hover{
+  filter: brightness(1.1);
+}
+
+.btn-outline-light{
+  border: 1px solid rgba(255,255,255,0.22);
+  color: rgba(229,231,235,0.92);
+  background: rgba(255,255,255,0.06);
+}
+
+.btn-outline-light:hover{
+  background: rgba(255,255,255,0.12);
+}
+
+/* BADGE variations */
+.badge.text-bg-primary{
+  background: rgba(255, 62, 96, 0.16) !important;
+  border: 1px solid rgba(255, 62, 96, 0.35);
+  color: #ffd0d8 !important;
 }
