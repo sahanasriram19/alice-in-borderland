@@ -5,11 +5,11 @@ const userModel = require("../models/userModel.js");
 // POST /profiles
 module.exports.createProfile = (req, res, next) => {
 
-    if (!req.body.user_id) {
+    if (!res.locals.userId) {
         return res.status(400).json({ message: "user_id is required" });
     }
     const data = {
-        user_id: req.body.user_id
+        user_id: res.locals.userId
     };
 
     const callback = (error, results) => {
@@ -29,7 +29,7 @@ module.exports.createProfile = (req, res, next) => {
 // GET /profiles/:user_id
 module.exports.readProfileByUserId = (req, res, next) => {
     const data = {
-        user_id: req.params.user_id
+        user_id: res.locals.userId
     };
 
     const callback = (error, results) => {
@@ -48,4 +48,3 @@ module.exports.readProfileByUserId = (req, res, next) => {
 
     model.selectByUserId(data, callback);
 };
-

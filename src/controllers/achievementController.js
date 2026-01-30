@@ -83,8 +83,8 @@ if (error) {
 
 // POST /achievements/:id/unlock
 module.exports.prepareUnlock = (req, res, next) => {
-  if (!req.body.user_id) return res.status(400).json({ message: "user_id is required" });
-  res.locals.unlock = { user_id: req.body.user_id, achievement_id: req.params.id };
+  if (!res.locals.userId) return res.status(400).json({ message: "user_id is required" });
+  res.locals.unlock = { user_id: res.locals.userId, achievement_id: req.params.id };
   next();
 };
 
@@ -112,7 +112,7 @@ module.exports.unlock = (req, res, next) => {
 
 // GET /users/:user_id/achievements 
 module.exports.readUnlockedRawByUserId = (req, res, next) => {
-  const data = { user_id: req.params.user_id };
+  const data = { user_id: res.locals.userId };
 
   const callback = (error, results) => {
 if (error) {

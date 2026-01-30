@@ -72,7 +72,7 @@ module.exports.readAllUser = (req, res, next) => {
 //Endpoint 3:GET /users/:user_id
 module.exports.readUserById = (req, res, next) => {
     const data = {
-        user_id: req.params.user_id
+        user_id: res.locals.userId
     }
 
     const callback = (error, results, fields) => {
@@ -95,7 +95,7 @@ module.exports.readUserById = (req, res, next) => {
 //Endpoint 4:PUT /users/:user_id
 module.exports.updateUserById = (req, res, next) => {
     const data = {
-        user_id: req.params.user_id,
+        user_id: res.locals.userId,
         username: req.body.username,
         points: req.body.points
     };

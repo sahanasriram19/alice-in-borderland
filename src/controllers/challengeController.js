@@ -4,7 +4,7 @@ const model = require("../models/challengeModel.js")
 //Endpoint 5:POST /challenges
 module.exports.createChallenge = (req, res, next) => {
     const data = {
-        user_id: req.body.user_id,
+        user_id: res.locals.userId,
         description: req.body.description,
         points: req.body.points
     };
@@ -37,12 +37,12 @@ module.exports.readChallengeById = (req, res, next) => {
     };
 
     const callback = (error, results, fields) => {
-if (error) {
-  console.error("Error readChallengeById:", error);
-  return res.status(500).json({
-    message: "Internal server error"
-  });
-}
+        if (error) {
+        console.error("Error readChallengeById:", error);
+        return res.status(500).json({
+            message: "Internal server error"
+        });
+        }
         else if (results.length === 0) {
             res.status(404).json({ message: "Challenge not found" });
         }
@@ -75,6 +75,7 @@ if (error) {
 
 //Endpoint 7:DELETE /challenges/:challenge_id
 module.exports.deleteChallenge = (req, res, next) => {
+
     const challengeId = req.params.challenge_id;
     const callback = (error, results, fields) => {
 if (error) {

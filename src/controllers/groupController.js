@@ -40,13 +40,13 @@ module.exports.checkGroupCapacity = (req, res, next) => {
 
 // POST /groups/:group_id/join
 module.exports.joinGroup = (req, res, next) => {
-    if (!req.params.group_id || !req.body.user_id) {
+    if (!req.params.group_id || !res.locals.userId) {
      return res.status(400).json({ message: "group_id and user_id are required" });
     }
     
     const data = {
         group_id: req.params.group_id,
-        user_id: req.body.user_id
+        user_id: res.locals.userId
     };
 
     const callback = (error, results, fields) => {

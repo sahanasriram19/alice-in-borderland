@@ -5,7 +5,7 @@ const model = require('../models/completionModel');
 // Check user_id exists
 module.exports.checkUserIdExists = (req, res, next) => {
     const data = {
-        userId: req.body.user_id
+        userId: res.locals.userId
     };
 
     const callback = (error, results, fields) => {
@@ -48,7 +48,7 @@ module.exports.checkChallengeIdExists = (req, res, next) => {
 module.exports.createCompletionRecord = (req, res, next) => {
     const data = {
         challengeId: req.params.challengeId,
-        userId: req.body.user_id,
+        userId: res.locals.userId,
         details: req.body.details
     };
 

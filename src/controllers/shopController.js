@@ -5,12 +5,12 @@ const userModel = require("../models/userModel");
 
 // Middleware 1: load item and compute total cost 
 module.exports.loadBuyInfo = (req, res, next) => {
-  if (!req.body.user_id || !req.body.quantity) {
+  if (!res.locals.userId || !req.body.quantity) {
     return res.status(400).json({ message: "user_id and quantity are required" });
   }
 
   const buy = {
-    user_id: req.body.user_id,
+    user_id: res.locals.userId,
     item_id: req.params.id,
     quantity: req.body.quantity
   };

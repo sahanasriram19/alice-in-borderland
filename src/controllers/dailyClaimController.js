@@ -3,11 +3,11 @@ const model = require("../models/dailyClaimModel");
 
 // POST /daily-claim
 module.exports.claimDaily = (req, res, next) => {
-  if (!req.body.user_id) {
+  if (!res.locals.userId) {
     return res.status(400).json({ message: "user_id required" });
   }
 
-  const data = { user_id: req.body.user_id };
+  const data = { user_id: res.locals.userId };
 
   const callback = (error, results) => {
     if (error) {

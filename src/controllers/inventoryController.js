@@ -1,16 +1,17 @@
 // Import Model
 const model = require("../models/inventoryModel");
 
-// GET /inventory/:user_id
+// GET /inventory
 module.exports.readInventoryByUserId = (req, res, next) => {
-  const data = { user_id: req.params.user_id };
+  const data = { user_id: res.locals.userId };
 
   const callback = (error, results) => {
     if (error) {
       console.error("Error readInventoryByUserId:", error);
       return res.status(500).json({ message: "Internal server error" });
     }
-    res.locals.result = results;
+
+    res.locals.inventory = results;
     next();
   };
 
