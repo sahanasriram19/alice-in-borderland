@@ -4,13 +4,15 @@ const router = express.Router();
 
 //Import Middleware
 const response = require('../middlewares/response');
+const jwtMiddleware = require('../middlewares/jwtMiddleware');
 
 // Import Controller
 const controller = require('../controllers/challengeController');
-const completionController = require('../controllers/completionController')
+const completionController = require('../controllers/completionController');
 
 //Endpoint 5:POST /challenges
 router.post('/',
+    jwtMiddleware.verifyToken,
     controller.createChallenge,
     controller.readChallengeById,
     response.withMessage("Challenge created successfully", 201),
@@ -19,6 +21,7 @@ router.post('/',
 
 //Endpoint 6:GET /challenges
 router.get('/',
+    jwtMiddleware.verifyToken,
     controller.readAllChallenge,
     response.withMessage("Fetched all challenges", 200),
     response.sendResponse
@@ -26,6 +29,7 @@ router.get('/',
 
 //Endpoint 7:DELETE /challenges/:challenge_id
 router.delete('/:challenge_id',
+    jwtMiddleware.verifyToken, 
     controller.deleteChallenge,
     response.withMessage("", 204),
     response.sendResponse
@@ -33,6 +37,7 @@ router.delete('/:challenge_id',
 
 //Endpoint 8:PUT /challenges/:challenge_id
 router.put('/:challenge_id',
+    jwtMiddleware.verifyToken,
     controller.checkChallengeOwner,
     controller.updateChallengeById,
     controller.readChallengeById,
@@ -42,6 +47,7 @@ router.put('/:challenge_id',
 
 //Endpoint 9:POST /challenges/:challenge_id/
 router.post("/:challengeId/",
+    jwtMiddleware.verifyToken,
     completionController.checkUserIdExists,
     completionController.checkChallengeIdExists,
     completionController.createCompletionRecord,
@@ -54,6 +60,7 @@ router.post("/:challengeId/",
 
 //Endpoint 10:GET /challenges/:challenge_id
 router.get('/:challenge_id',
+    jwtMiddleware.verifyToken,
     controller.getUsersByChallengeId,
     response.withMessage("Fetched users for the challenge", 200),
     response.sendResponse

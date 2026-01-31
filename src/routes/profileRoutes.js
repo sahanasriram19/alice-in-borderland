@@ -7,16 +7,19 @@ const controller = require("../controllers/profileController");
 
 // Import Middleware
 const response = require("../middlewares/response");
+const jwtMiddleware = require('../middlewares/jwtMiddleware');
 
 // POST /profiles
 router.post("/",
+    jwtMiddleware.verifyToken,
     controller.createProfile,
     response.withMessage("Profile created successfully", 201),
     response.sendResponse
 );
 
-// GET /profiles/:user_id
-router.get("/:user_id",
+// GET /profiles/me
+router.get("/me",
+    jwtMiddleware.verifyToken,
     controller.readProfileByUserId,
     response.withMessage("Profile fetched successfully", 200),
     response.sendResponse

@@ -4,12 +4,14 @@ const router = express.Router();
 
 //Import Middleware
 const response = require("../middlewares/response");
+const jwtMiddleware = require ('../middlewares/jwtMiddleware')
 
 //Import Controller
 const controller = require("../controllers/shopController");
 
 // Endpoint: POST /shop/:id/buy
 router.post("/:id/buy",
+  jwtMiddleware.verifyToken,
   controller.loadBuyInfo,
   controller.deductPointsForBuy,
   controller.addInventoryForBuy,
