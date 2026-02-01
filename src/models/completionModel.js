@@ -68,3 +68,19 @@ module.exports.getCompletionById = (data, callback) => {
 
     pool.query(SQLSTATEMENT, VALUES, callback);
 };
+
+module.exports.selectCompletedChallengesByUserId = (data, callback) => {
+  const SQLSTATEMENT = `
+    SELECT
+      uc.id AS completion_id,
+      uc.challenge_id,
+      uc.details,
+      wc.description,
+      wc.points
+    FROM UserCompletion uc
+    JOIN WellnessChallenge wc ON wc.id = uc.challenge_id
+    WHERE uc.user_id = ?;
+  `;
+
+  pool.query(SQLSTATEMENT, [data.user_id], callback);
+};

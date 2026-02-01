@@ -17,19 +17,21 @@ module.exports.createChallenge = (data, callback) => {
 
 //Endpoint 5:POST /challenges 
 //Endpoint 8:PUT /challenges/:challenge_id
+// Get challenge creator by ID (for owner check)
 module.exports.selectById = (data, callback) => {
-    const SQLSTATMENT = `
-    SELECT * FROM WellnessChallenge
+  const SQLSTATEMENT = `
+    SELECT id, creator_id, description, points
+    FROM WellnessChallenge
     WHERE id = ?;
-    `;
-    const VALUES = [data.challenge_id];
-    pool.query(SQLSTATMENT, VALUES, callback);
-}
+  `;
+  const VALUES = [data.challenge_id];
+  pool.query(SQLSTATEMENT, VALUES, callback);
+};
 
 //Endpoint 6:GET /challenges
 module.exports.selectAll = (callback) => {
     const SQLSTATMENT = `
-    SELECT * FROM WellnessChallenge;
+    SELECT id, creator_id, description, points FROM WellnessChallenge;
     `;
     pool.query(SQLSTATMENT, callback);
 }
@@ -46,18 +48,14 @@ module.exports.deleteChallenge = (challenge_id, callback) => {
 
 //Endpoint 8:PUT /challenges/:challenge_id
 module.exports.updateById = (data, callback) => {
-    const SQLSTATMENT = `
-    UPDATE WellnessChallenge        
+  const SQLSTATEMENT = `
+    UPDATE WellnessChallenge
     SET description = ?, points = ?
     WHERE id = ?;
-    `;
-    const VALUES = [
-        data.description,
-        data.points,
-        data.challenge_id
-    ];
-    pool.query(SQLSTATMENT, VALUES, callback);
-}
+  `;
+  const VALUES = [data.description, data.points, data.challenge_id];
+  pool.query(SQLSTATEMENT, VALUES, callback);
+};
 
 //Endpoint 10:GET /challenges/:challenge_id/
 module.exports.getUsersByChallengeId = (data, callback) => {

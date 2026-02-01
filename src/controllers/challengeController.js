@@ -95,63 +95,66 @@ if (error) {
     model.deleteChallenge(challengeId, callback);
 }
 
-// Endpoint 8:PUT /challenges/:challenge_id (check challenge owner)
+// Endpoint 8: PUT /challenges/:challenge_id (check challenge owner)
 module.exports.checkChallengeOwner = (req, res, next) => {
-    const data = {
-        challenge_id: req.params.challenge_id
-    };
+  const challengeId = Number(req.params.challenge_id);
 
-    const callback = (error, results, fields) => {
+  if (!Number.isInteger(challengeId) || challengeId <= 0) {
+    return res.status(400).json({ message: "Invalid challenge id" });
+  }
+
+  const data = { challenge_id: challengeId };
+
+  const callback = (error, results) => {
     if (error) {
-     console.error("Error checkChallengeOwner:", error);
-    return res.status(500).json({
-    message: "Internal server error"
-     });
+      console.error("Error checkChallengeOwner:", error);
+      return res.status(500).json({ message: "Internal server error" });
     }
 
-        if (results.length === 0) {
-            return res.status(404).json({
-                message: "Challenge not found"
-            });
-        }
+    if (results.length === 0) {
+      return res.status(404).json({ message: "Challenge not found" });
+    }
 
-        if (results[0].creator_id != req.body.user_id) {
-            return res.status(403).json({
-                message: "Forbidden: you are not the creator of this challenge"
-            });
-        }
+    const creatorId = Number(results[0].creator_id);
+    const tokenUserId = Number(res.locals.userId);
 
-        next();
-    };
+    if (creatorId !== tokenUserId) {
+      return res.status(403).json({
+        message: "Forbidden: you are not the creator of this challenge"
+      });
+    }
 
-    model.selectById(data, callback);
+    next();
+  };
+
+  model.selectById(data, callback);
 };
 
 //Endpoint 8:PUT /challenges/:challenge_id
 module.exports.updateChallengeById = (req, res, next) => {
-    const data = {
-        challenge_id: req.params.challenge_id,
-        description: req.body.description,
-        points: req.body.points,
-    };
-    const callback = (error, results, fields) => {
+  const challengeId = Number(req.params.challenge_id);
+
+  const data = {
+    challenge_id: challengeId,
+    description: req.body.description,
+    points: req.body.points
+  };
+
+  const callback = (error, results) => {
     if (error) {
-    console.error("Error updateChallengeById:", error);
-    return res.status(500).json({
-          message: "Internal server error"
-  });
-}
-        if (results.affectedRows === 0) {
-            return res.status(404).json({message:"Challenge not found."});
-        }
-        else {
-            res.locals.challenge_id = req.params.challenge_id;
-            next();
-        }
+      console.error("Error updateChallengeById:", error);
+      return res.status(500).json({ message: "Internal server error" });
     }
 
-    model.updateById(data, callback);
-}
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ message: "Challenge not found." });
+    }
+
+    next();
+  };
+
+  model.updateById(data, callback);
+};
 
 //Endpoint 10:GET /challenges/:challenge_id/
 module.exports.getUsersByChallengeId = (req, res, next) => {

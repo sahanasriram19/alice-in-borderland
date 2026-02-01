@@ -66,5 +66,12 @@ router.get('/:challenge_id',
     response.sendResponse
 );
 
+// GET /challenges/completed/me
+router.get("/completed/me",
+  jwtMiddleware.verifyToken,
+  completionController.getMyCompletedChallenges,
+  response.withMessage("Completed challenges retrieved", 200),
+  response.sendResponse
+);
 
 module.exports = router;

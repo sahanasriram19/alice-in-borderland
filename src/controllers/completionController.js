@@ -119,3 +119,23 @@ module.exports.rewardPoints = (req, res, next) => {
     }
     model.rewardPoints(data, callback);
 };
+
+//get completed challenges
+module.exports.getMyCompletedChallenges = (req, res, next) => {
+  const data = {
+    user_id: res.locals.userId // comes from JWT
+  };
+
+  const callback = (error, results) => {
+    if (error) {
+      console.error("Error getMyCompletedChallenges:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+
+    // response.sendResponse will wrap this into { data: { completedChallenges: [...] } }
+    res.locals.completedChallenges = results;
+    next();
+  };
+
+  model.selectCompletedChallengesByUserId(data, callback);
+};
