@@ -15,7 +15,7 @@ module.exports.selectAll = (callback) => {
 module.exports.countMembersByGroupId = (data, callback) => {
   const SQLSTATEMENT = `
     SELECT COUNT(*) AS member_count
-    FROM PlayerProfile
+    FROM UserProfile
     WHERE group_id = ?;
   `;
   const VALUES = [data.group_id];
@@ -26,7 +26,7 @@ module.exports.countMembersByGroupId = (data, callback) => {
 // POST /groups/:group_id/join
 module.exports.joinGroup = (data, callback) => {
     const SQLSTATEMENT = `
-        UPDATE PlayerProfile
+        UPDATE UserProfile
         SET group_id = ?
         WHERE user_id = ?;
     `;

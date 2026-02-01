@@ -4,9 +4,15 @@ const pool = require("../services/db");
 // GET /inventory/:user_id
 module.exports.selectByUserId = (data, callback) => {
   const SQLSTATEMENT = `
-    SELECT id, user_id, item_id, quantity
-    FROM UserInventory
-    WHERE user_id = ?;
+    SELECT
+      i.id,
+      i.name,
+      i.description,
+      ui.quantity
+    FROM UserInventory AS ui
+    INNER JOIN ShopItem AS i
+      ON ui.item_id = i.id
+    WHERE ui.user_id = ?;
   `;
   const VALUES = [data.user_id];
 

@@ -4,7 +4,7 @@ const pool = require('../services/db');
 // Create Profile
 module.exports.createProfile = (data, callback) => {
     const SQLSTATEMENT = `
-        INSERT INTO PlayerProfile (user_id, power)
+        INSERT INTO UserProfile (user_id, power)
         VALUES (?, 0);
     `;
     const VALUES = [data.user_id];
@@ -12,11 +12,21 @@ module.exports.createProfile = (data, callback) => {
     pool.query(SQLSTATEMENT, VALUES, callback);
 };
 
-// Read Profile by User ID
+// Read user's profile
+// Consists of username, user's character, user's current points
 module.exports.selectByUserId = (data, callback) => {
     const SQLSTATEMENT = `
-        SELECT * FROM PlayerProfile
-        WHERE user_id = ?;
+        SELECT
+            u.id,
+            u.username,
+            u.points,
+            p.character_name
+        FROM User AS u
+        INNER JOIN ProfileLevel AS p
+            ON u.points >= p.required_total_points
+        WHERE u.id = ?
+        ORDER BY p.required_total_points DESC
+        LIMIT 1;
     `;
     const VALUES = [data.user_id];
 

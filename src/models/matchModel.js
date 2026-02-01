@@ -31,10 +31,10 @@ module.exports.selectMatchById = (data, callback) => {
 module.exports.selectGroupInventoryPower = (data, callback) => {
   const SQLSTATEMENT = `
     SELECT SUM(si.power * ui.quantity) AS power_score
-    FROM PlayerProfile pp
-    LEFT JOIN UserInventory ui ON ui.user_id = pp.user_id
+    FROM UserProfile up
+    LEFT JOIN UserInventory ui ON ui.user_id = up.user_id
     LEFT JOIN ShopItem si ON si.id = ui.item_id
-    WHERE pp.group_id = ?;
+    WHERE up.group_id = ?;
   `;
   const VALUES = [data.group_id];
 
