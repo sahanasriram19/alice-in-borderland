@@ -33,3 +33,12 @@ module.exports.selectByUserId = (data, callback) => {
     pool.query(SQLSTATEMENT, VALUES, callback);
 };
 
+// GET all profile levels (characters)
+module.exports.selectAllProfileLevels = (callback) => {
+  const SQLSTATEMENT = `
+    SELECT character_name, description, required_total_points
+    FROM ProfileLevel
+    ORDER BY required_total_points ASC;
+  `;
+  pool.query(SQLSTATEMENT, callback);
+};

@@ -2,9 +2,11 @@
 const pool = require("../services/db");
 
 // GET all shop items
-module.exports.selectAllItems = (callback) => {
+module.exports.selectAll = (callback) => {
   const SQLSTATEMENT = `
-    SELECT * FROM ShopItem;
+    SELECT id, name, description, cost, power
+    FROM ShopItem
+    ORDER BY id ASC;
   `;
   pool.query(SQLSTATEMENT, callback);
 };

@@ -3,12 +3,18 @@ const pool = require("../services/db");
 
 // GET /groups
 module.exports.selectAll = (callback) => {
-    const SQLSTATEMENT = `
-        SELECT * FROM CommunityGroup;
-    `;
-    const VALUES = [];
+  const SQLSTATEMENT = `
+    SELECT 
+      g.id,
+      g.name,
+      g.description,
+      COUNT(up.user_id) AS member_count
+    FROM CommunityGroup g
+    LEFT JOIN UserProfile up ON up.group_id = g.id
+    GROUP BY g.id;
+  `;
 
-    pool.query(SQLSTATEMENT, VALUES, callback);
+  pool.query(SQLSTATEMENT, callback);
 };
 
 // Count how many players are in a group

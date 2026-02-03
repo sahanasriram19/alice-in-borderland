@@ -2,6 +2,21 @@
 const model = require("../models/shopModel");
 const userModel = require("../models/userModel");
 
+// GET /shop
+module.exports.readAllShopItems = (req, res, next) => {
+  const callback = (error, results) => {
+    if (error) {
+      console.error("Error readAllShopItems:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+
+    // response.sendResponse will send { message, data: { ... } }
+    res.locals.items = results;
+    next();
+  };
+
+  model.selectAll(callback);
+};
 
 // Middleware 1: load item and compute total cost 
 module.exports.loadBuyInfo = (req, res, next) => {
@@ -14,6 +29,8 @@ module.exports.loadBuyInfo = (req, res, next) => {
     item_id: req.params.id,
     quantity: req.body.quantity
   };
+
+  
 
   const callback = (error, results) => {
     if (error) {

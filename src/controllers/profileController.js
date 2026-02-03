@@ -48,3 +48,18 @@ module.exports.readProfileByUserId = (req, res, next) => {
 
     model.selectByUserId(data, callback);
 };
+
+// GET /profiles/levels
+module.exports.readAllProfileLevels = (req, res, next) => {
+  const callback = (error, results) => {
+    if (error) {
+      console.error("Error readAllProfileLevels:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+
+    res.locals.profileLevels = results;
+    next();
+  };
+
+  model.selectAllProfileLevels(callback);
+};

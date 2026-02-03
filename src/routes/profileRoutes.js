@@ -25,5 +25,12 @@ router.get("/me",
     response.sendResponse
 );
 
+// GET /profiles/levels
+router.get("/levels",
+  jwtMiddleware.verifyToken,
+  controller.readAllProfileLevels,
+  response.withMessage("Profile levels fetched", 200),
+  response.sendResponse
+);
 
 module.exports = router;

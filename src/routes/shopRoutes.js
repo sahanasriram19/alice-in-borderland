@@ -9,6 +9,14 @@ const jwtMiddleware = require ('../middlewares/jwtMiddleware')
 //Import Controller
 const controller = require("../controllers/shopController");
 
+// GET /shop  (get all shop items)
+router.get("/",
+  jwtMiddleware.verifyToken,
+  controller.readAllShopItems,
+  response.withMessage("Shop items fetched", 200),
+  response.sendResponse
+);
+
 // Endpoint: POST /shop/:id/buy
 router.post("/:id/buy",
   jwtMiddleware.verifyToken,
