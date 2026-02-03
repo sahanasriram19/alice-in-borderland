@@ -17,6 +17,7 @@ module.exports.readAllGroups = (req, res, next) => {
     model.selectAll(callback);
 };
 
+
 module.exports.checkGroupCapacity = (req, res, next) => {
   const data = { group_id: req.params.group_id };
 

@@ -17,7 +17,6 @@ router.get("/",
   response.sendResponse
 );
 
-// DELETE /inventory/item/:id
-router.delete("/item/:id", controller.deleteInventoryRow);
+
 
 module.exports = router;

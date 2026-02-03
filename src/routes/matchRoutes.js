@@ -24,7 +24,6 @@ router.post("/:match_id/resolve",
   controller.loadGroupAInventoryPower,
   controller.loadGroupBInventoryPower,
   controller.decideWinner,
-  controller.saveOutcome,
   response.withMessage("Match resolved successfully", 200),
   response.sendResponse
 );

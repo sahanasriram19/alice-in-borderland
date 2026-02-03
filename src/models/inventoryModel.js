@@ -18,14 +18,3 @@ module.exports.selectByUserId = (data, callback) => {
 
   pool.query(SQLSTATEMENT, VALUES, callback);
 };
-
-// DELETE /inventory/:id 
-module.exports.deleteById = (data, callback) => {
-  const SQLSTATEMENT = `
-    DELETE FROM UserInventory
-    WHERE id = ?;
-  `;
-  const VALUES = [data.id];
-
-  pool.query(SQLSTATEMENT, VALUES, callback);
-};

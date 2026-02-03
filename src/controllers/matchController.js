@@ -103,21 +103,3 @@ module.exports.decideWinner = (req, res, next) => {
 
   next();
 };
-
-// Controller 5: store winner info
-module.exports.saveOutcome = (req, res, next) => {
-  const data = res.locals.resultData;
-
-  const callback = (error, results) => {
-    if (error) {
-      console.error("Error saveOutcome:", error);
-      return res.status(500).json({ message: "Internal server error" });
-    }
-
-    // results.affectedRows will be 1 (insert) or 2 (update) depending on mysql
-    res.locals.result = data;
-    next();
-  };
-
-  model.upsertMatchOutcome(data, callback);
-};
