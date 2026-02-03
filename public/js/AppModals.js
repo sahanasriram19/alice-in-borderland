@@ -1,9 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
+
   function getBootstrapModal(modalEl) {
     if (!modalEl || typeof bootstrap === "undefined" || !bootstrap.Modal) return null;
 
     var instance = bootstrap.Modal.getInstance(modalEl);
+
     if (!instance) instance = new bootstrap.Modal(modalEl);
+    
     return instance;
   }
 
