@@ -1,88 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Profile</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-      crossorigin="anonymous"
-    />
-    <link href="css/style.css" rel="stylesheet" />
-    <link href="css/color.css" rel="stylesheet" />
-    <link href="css/form.css" rel="stylesheet" />
-  </head>
-  <body>
-    <div id="navbar"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
 
-<main>
-  <div class="profile-wrapper">
+  <title>Profile</title>
 
-    <div class="profile-grid">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+    crossorigin="anonymous"
+  />
+  
+  <link href="css/base.css" rel="stylesheet" />
+  <link href="css/style.css" rel="stylesheet" />
+  <link href="css/color.css" rel="stylesheet" />
+  <link href="css/form.css" rel="stylesheet" />
+</head>
 
-      <!-- LEFT PANEL: PLAYER FILE -->
-      <div class="profile-panel">
+<body>
+  <div id="navbar"></div>
 
-        <div class="d-flex align-items-center justify-content-between mb-3">
-          <h2>Player profile</h2>
-          <a class="btn btn-outline-light" href="dashboard.html">Back</a>
+  <main>
+    <div class="profile-wrapper">
+      <div class="profile-grid">
+
+        <!-- LEFT PANEL: PLAYER PROFILE -->
+        <div class="profile-panel left">
+
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <h2>Player profile</h2>
+            <a class="btn btn-outline-light" href="index.html">Back</a>
+          </div>
+
+          <div id="msg" class="alert alert-danger d-none"></div>
+
+          <!-- AVATAR (NO EXTRA .profile-panel WRAPPER) -->
+          <div class="profile-avatar-wrap">
+            <div class="avatar-wrap">
+              <img id="profileAvatar" class="profile-avatar" src="" alt="Player avatar">
+            </div>
+          </div>
+
+          <div class="info-box">
+            <div class="info-label">Username</div>
+            <div class="info-value" id="profileUsername"></div>
+          </div>
+
+          <div class="info-box">
+            <div class="info-label">Character</div>
+            <div class="info-value" id="profileCharacter"></div>
+          </div>
+
+          <div class="info-box">
+            <div class="info-label">Current Points</div>
+            <div class="info-value" id="profilePoints"></div>
+          </div>
+
+          <div class="info-box">
+            <div class="info-label">Status</div>
+            <div class="info-value">Alive in Borderland</div>
+          </div>
+
         </div>
 
-        <div id="msg" class="alert alert-danger d-none"></div>
+        <!-- RIGHT PANEL: INVENTORY -->
+        <div class="profile-panel right">
 
-        <div class="info-box">
-          <div class="info-label">Username</div>
-          <div class="info-value" id="profileUsername"></div>
-        </div>
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <h2>Unlocked Items</h2>
+            <a class="btn btn-primary" href="shop.html">Game Shop</a>
+          </div>
 
-        <div class="info-box">
-          <div class="info-label">Character</div>
-          <div class="info-value" id="profileCharacter"></div>
-       </div>
+          <div id="inventoryEmpty" class="info-label d-none">
+            You haven't unlocked any items yet. Earn points by completing challenges.
+          </div>
 
-        <div class="info-box">
-          <div class="info-label">Current Points</div>
-          <div class="info-value" id="profilePoints"></div>
-        </div>
+          <div id="inventoryList" class="inventory-grid"></div>
 
-        <div class="info-box">
-          <div class="info-label">Status</div>
-          <div class="info-value">Alive in Borderland</div>
         </div>
 
       </div>
-
-      <!-- RIGHT PANEL: INVENTORY -->
-      <div class="profile-panel right">
-
-        <div class="d-flex align-items-center justify-content-between mb-3">
-          <h2>Unlocked Items</h2>
-          <a class="btn btn-primary" href="shop.html">Game Shop</a>
-        </div>
-
-        <div id="inventoryEmpty" class="info-label d-none">
-          You haven't unlocked any items yet. Earn points by completing challenges.
-        </div>
-
-        <div id="inventoryList" class="inventory-grid"></div>
-
-      </div>
-
     </div>
+  </main>
 
-  </div>
-</main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+<script src="js/getCurrentURL.js"></script>
+<script src="js/queryCmds.js"></script>
 
-    <script src="js/navbar.js"></script>
-    <script src="js/userNavbarToggle.js" type="text/javascript"></script>
+<!-- IMPORTANT: helpers must be before profile.js -->
+<script src="js/AppHelpers.js"></script>
 
-    <script src="js/queryCmds.js" type="text/javascript"></script>
-    <script src="js/profile.js" type="text/javascript"></script>
-  </body>
+<script src="js/requireAuth.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/userNavbarToggle.js"></script>
+
+<script src="js/profile.js"></script>
+</body>
+
 </html>

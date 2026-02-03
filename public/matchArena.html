@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Match Arena | Borderland</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+
+  <link href="css/base.css" rel="stylesheet" />
+  <link href="css/style.css" rel="stylesheet" />
+  <link href="css/color.css" rel="stylesheet" />
+</head>
+<body class="bg-matches">
+
+  <!-- Navbar -->
+  <div id="navbar"></div>
+
+  <main class="py-4">
+
+    <h1 class="home-title mb-3 text-center">Match Arena</h1>
+
+<!-- Exit Arena Button -->
+<div class="arena-exit-center">
+  <a href="matches.html" class="btn btn-outline-danger">
+    ⬅ Exit Arena
+  </a>
+</div>
+
+    <div class="container">
+
+      <!-- ARENA -->
+      <div class="match-arena mx-auto" style="max-width: 900px;">
+
+        <div class="row g-4 justify-content-center">
+
+          <!-- YOUR GROUP -->
+          <div class="col-12 col-md-5">
+            <div class="arena-group-box arena-tall text-center">
+              <div class="smalltext-uppercase opacity-75 mb-2">
+                Your Group
+              </div>
+              <h2 id="myGroupName">-</h2>
+            </div>
+          </div>
+
+          <!-- VS -->
+          <div class="col-12 col-md-2 d-flex align-items-center justify-content-center ">
+            <div class="fs-1 fw-bold text-danger">
+              VS
+            </div>
+          </div>
+
+          <!-- ENEMY GROUP -->
+          <div class="col-12 col-md-5">
+            <div class="arena-group-box arena-tall text-center">
+              <div class="smalltext opacity-75 mb-2">
+                Opponent Group
+              </div>
+              <h2 id="enemyGroupName">-</h2>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- BUTTON -->
+        <div class="mt-4 text-center">
+          <button id="beginMatchBtn" class="btn btn-primary px-5 py-2">
+            Begin Match
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- BOTTOM POPUP -->
+  <div id="arenaMsg" class="arena-popup d-none"></div>
+<!-- Bootstrap JS (keep if you're using Bootstrap components) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+<!-- 1) CORE HELPERS (MUST be before page JS) -->
+<script src="js/getCurrentURL.js"></script>
+<script src="js/AppHelpers.js"></script>
+<script src="js/AppModals.js"></script>
+<script src="js/queryCmds.js"></script>
+
+<!-- 2) AUTH + NAV -->
+<script src="js/requireAuth.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/userNavbarToggle.js"></script>
+<script src="js/logoutUser.js"></script>
+
+<!-- 3) PAGE LOGIC (ALWAYS LAST) -->
+<script src="js/matchArena.js"></script>
+
+</body>
+</html>
