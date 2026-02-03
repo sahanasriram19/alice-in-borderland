@@ -1,7 +1,5 @@
-//=====================================================================================
 // FETCH METHOD
 // This function uses the fetch API to make a request to the server.
-//=====================================================================================
 function fetchMethod(url, callback, method = "GET", data = null, token = null) {
   console.log("fetchMethod: ", url, method, data, token);
 
@@ -35,13 +33,3 @@ function fetchMethod(url, callback, method = "GET", data = null, token = null) {
     .catch((error) => console.error(`Error from ${method} ${url}:`, error));
 }
 
-//=====================================================================================
-// JQUERY METHOD
-// This function uses the jQuery ajax method to make a request to the server.
-//=====================================================================================
-
-
-//=====================================================================================
-// AXIOS METHOD
-// This function uses the axios method to make a request to the server.
-//=====================================================================================
