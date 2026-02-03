@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
       password: password,
     };
     // Perform login request
-    fetchMethod(currentUrl + "/api/login", callback, "POST", data);
+    fetchMethod(currentUrl + "/api/auth/login", callback, "POST", data);
 
     // Reset the form fields
     loginForm.reset();
