@@ -21,203 +21,226 @@ bcrypt.hash('1234', saltRounds, (error, hash) => {
 
     const SQLSTATEMENT = `
 
-      DROP TABLE IF EXISTS UserToken;
-      DROP TABLE IF EXISTS MatchOutcome;
-      DROP TABLE IF EXISTS DailyClaim;
+
       DROP TABLE IF EXISTS UserInventory;
       DROP TABLE IF EXISTS ShopItem;
-      DROP TABLE IF EXISTS UserAchievement;
-      DROP TABLE IF EXISTS Achievement;
-
       DROP TABLE IF EXISTS GroupMatch;
-      DROP TABLE IF EXISTS CompetitionSeason;
-      DROP TABLE IF EXISTS PlayerProfile;
+      DROP TABLE IF EXISTS UserProfile;
       DROP TABLE IF EXISTS CommunityGroup;
       DROP TABLE IF EXISTS ProfileLevel;
-
       DROP TABLE IF EXISTS UserCompletion;
       DROP TABLE IF EXISTS WellnessChallenge;
       DROP TABLE IF EXISTS User;
 
-CREATE TABLE User (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  username VARCHAR(255) NOT NULL,
-  email TEXT NOT NULL,
-  password TEXT NOT NULL,
-  created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  last_login_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  points INT DEFAULT 0
-);
+      CREATE TABLE User (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(255) NOT NULL,
+        email TEXT NOT NULL,
+        password TEXT NOT NULL,
+        created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        last_login_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        points INT DEFAULT 0
+      );
 
-CREATE TABLE WellnessChallenge (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  creator_id INT NOT NULL,
-  description TEXT NOT NULL,
-  points INT NOT NULL
-);
+      CREATE TABLE WellnessChallenge (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        creator_id INT NOT NULL,
+        description TEXT NOT NULL,
+        points INT NOT NULL
+      );
 
-CREATE TABLE UserCompletion (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
-  challenge_id INT NOT NULL,
-  details TEXT
-);
+      CREATE TABLE UserCompletion (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        challenge_id INT NOT NULL,
+        details TEXT
+      );
 
-CREATE TABLE ProfileLevel (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  required_total_power INT NOT NULL
-);
+      CREATE TABLE ProfileLevel (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        character_name VARCHAR(255) NOT NULL,
+        description TEXT NOT NULL,
+        required_total_points INT NOT NULL
+      );
 
-CREATE TABLE CommunityGroup (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  description TEXT
-);
+      CREATE TABLE CommunityGroup (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        description TEXT
+      );
 
-CREATE TABLE PlayerProfile (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL UNIQUE,
-  group_id INT DEFAULT NULL,
-  level_id INT DEFAULT NULL,
-  power INT DEFAULT 0
-);
+      CREATE TABLE UserProfile (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL UNIQUE,
+        group_id INT DEFAULT NULL
+      );
 
-CREATE TABLE CompetitionSeason (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  start_date DATE,
-  end_date DATE
-);
+      CREATE TABLE GroupMatch (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        group_a_id INT NOT NULL,
+        group_b_id INT NOT NULL,
+        season_id INT NOT NULL,
+        match_date DATE
+      );
 
-CREATE TABLE GroupMatch (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  group_a_id INT NOT NULL,
-  group_b_id INT NOT NULL,
-  season_id INT NOT NULL,
-  match_date DATE
-);
+      CREATE TABLE ShopItem (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        description TEXT,
+        cost INT NOT NULL,
+        power INT NOT NULL DEFAULT 0
+      );
 
-CREATE TABLE MatchOutcome (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  match_id INT NOT NULL UNIQUE,
-  score_a INT DEFAULT 0,
-  score_b INT DEFAULT 0,
-  winner_group_id INT NULL
-);
+      CREATE TABLE UserInventory (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        item_id INT NOT NULL,
+        quantity INT DEFAULT 1,
+        UNIQUE KEY unique_user_item (user_id, item_id)
+      );
 
-CREATE TABLE UserToken(
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL UNIQUE,
-  tokens INT DEFAULT 0
-);
+      INSERT INTO User (username, email, password, points) VALUES
+        ('hannah', 'hannah@example.com', '${hash}', 5),
+        ('alice', 'alice@example.com', '${hash}', 50),
+        ('george', 'george@example.com', '${hash}', 15),
+        ('david', 'david@example.com', '${hash}', 20),
+        ('sahana', 'sahana@example.com', '${hash}', 25),
+        ('bob', 'bob@example.com', '${hash}', 30),
+        ('ivan', 'ivan@example.com', '${hash}', 33),
+        ('diana', 'diana@example.com', '${hash}', 35),
+        ('jonathan', 'jonathan@example.com', '${hash}', 40),
+        ('julia', 'julia@example.com', '${hash}', 44),
+        ('fiona', 'fiona@example.com', '${hash}', 45),
+        ('charlie', 'charlie@example.com', '${hash}', 10),
+        ('vecna', 'vecna@example.com', '${hash}', 100);
 
-CREATE TABLE Achievement (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  description TEXT NOT NULL
-);
+      INSERT INTO WellnessChallenge (creator_id, description, points) VALUES
+        (1, 'Sleep like a boss - Get 7+ hours of sleep', 10),
+        (1, 'Stairs over elevator? Respect.- Take the stairs today', 20),
+        (2, 'Digital detox (mini edition) - No phone for 1 hour', 10),
+        (2, 'Touch grass IRL - Take a 15-minute walk outside', 10),
+        (2, 'IRL > DMs - Talk to a friend face-to-face', 20),
+        (3, 'Declutter your chaos - Clean your desk or room', 20),
+        (3, 'Help a homie - Assist someone without being asked', 20);
 
-CREATE TABLE UserAchievement (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
-  achievement_id INT NOT NULL,
-  unlocked_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE KEY unique_user_achievement (user_id, achievement_id)
-);
+      INSERT INTO UserCompletion (challenge_id, user_id, details) VALUES
+        (1, 1, 'Slept for 8 hours last night!'),
+        (2, 1, 'Took the stairs to the 5th floor. Feeling accomplished!'),
+        (3, 1, 'Stayed off my phone for an hour while reading a book.'),
+        (1, 2, 'Slept for 8 hours last night!'),
+        (2, 2, 'Took the stairs to the 5th floor. Feeling accomplished!'),
+        (3, 2, 'Stayed off my phone for an hour while reading a book.'),
+        (1, 3, 'Slept for 8 hours last night!'),
+        (2, 3, 'Took the stairs to the 5th floor. Feeling accomplished!'),
+        (3, 3, 'Stayed off my phone for an hour while reading a book.'),
+        (1, 4, 'Slept for 8 hours last night!'),
+        (2, 4, 'Took the stairs to the 5th floor. Feeling accomplished!'),
+        (3, 4, 'Stayed off my phone for an hour while reading a book.'),
+        (1, 5, 'Slept for 8 hours last night!'),
+        (2, 5, 'Took the stairs to the 5th floor. Feeling accomplished!'),
+        (3, 5, 'Stayed off my phone for an hour while reading a book.'),
+        (1, 6, 'Slept for 8 hours last night!'),
+        (2, 6, 'Took the stairs to the 5th floor. Feeling accomplished!'),
+        (3, 6, 'Stayed off my phone for an hour while reading a book.'),
+        (1, 7, 'Slept for 8 hours last night!'),
+        (2, 7, 'Took the stairs to the 5th floor. Feeling accomplished!'),
+        (3, 7, 'Stayed off my phone for an hour while reading a book.'),
+        (1, 8, 'Slept for 8 hours last night!'),
+        (2, 8, 'Took the stairs to the 5th floor. Feeling accomplished!'),
+        (3, 8, 'Stayed off my phone for an hour while reading a book.'),
+        (1, 9, 'Slept for 8 hours last night!'),
+        (2, 9, 'Took the stairs to the 5th floor. Feeling accomplished!'),
+        (3, 9, 'Stayed off my phone for an hour while reading a book.');
 
-CREATE TABLE ShopItem (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  description TEXT,
-  cost INT NOT NULL,
-  power INT NOT NULL DEFAULT 0
-);
+       INSERT INTO ProfileLevel (character_name, description, required_total_points) VALUES
+        ('Chota','Chota is the heart of the trio, loyal, 
+        supportive, and brave in the face of fear. 
+        You unlock him at 0 points as your 
+        starting profile — pure determination, 
+        even before the game begins.', 0),
 
-CREATE TABLE UserInventory (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
-  item_id INT NOT NULL,
-  quantity INT DEFAULT 1,
-  UNIQUE KEY unique_user_item (user_id, item_id)
-);
+        ('Karube','Karube is the fighter of the friend group,
+        energetic,athletic, and protective. At 10 points, you’ve proven 
+        enough consistency to unlock his bold, action-first mindset.',10),
 
-CREATE TABLE DailyClaim (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL UNIQUE,
-  last_claimed_at DATETIME DEFAULT NULL
-);
+        ('Aguni','Aguni is a hardened survivor, disciplined, relentless,
+        and shaped by brutal choices. At 15 points, you unlock a profile 
+        that represents raw resilience and combat readiness.',15),
 
-INSERT INTO User (username, email, password, points) VALUES
-  ('alice', 'alice@example.com', '${hash}', 100),
-  ('bob', 'bob@example.com', '${hash}', 150),
-  ('charlie', 'charlie@example.com', '${hash}', 200);
+        ('Ann','Ann is calm, observant, and highly capable under pressure,
+        a strategic climber and analyst. At 20 points, you unlock a 
+        profile built on intelligence, endurance, and composure.',20),
 
-INSERT INTO WellnessChallenge (creator_id, description, points) VALUES
-  (1, 'Sleep like a boss - Get 7+ hours of sleep', 10),
-  (1, 'Stairs over elevator? Respect.- Take the stairs today', 20),
-  (2, 'Digital detox (mini edition) - No phone for 1 hour', 10),
-  (2, 'Touch grass IRL - Take a 15-minute walk outside', 10),
-  (2, 'IRL > DMs - Talk to a friend face-to-face', 20),
-  (3, 'Declutter your chaos - Clean your desk or room', 20),
-  (3, 'Help a homie - Assist someone without being asked', 20);
+        ('Kuina','Kuina is fast, fearless, and skilled, a stylish but 
+        deadly fighter with strong loyalty. At 25 points, you unlock 
+        agility and confidence: the “don’t hesitate” mentality.',25),
 
-INSERT INTO UserCompletion (challenge_id, user_id, details) VALUES
-  (1, 1, 'Slept for 8 hours last night!'),
-  (2, 1, 'Took the stairs to the 5th floor. Feeling accomplished!'),
-  (3, 2, 'Stayed off my phone for an hour while reading a book.');
+        ('Chishiya','Chishiya is the mastermind — quiet, calculating, 
+        and always three moves ahead. At 30 points, you unlock pure 
+        strategy and manipulation: the profile of a true tactician.',30),
 
-INSERT INTO ProfileLevel (name, required_total_power) VALUES
-  ('Beginner', 0),
-  ('Intermediate', 25),
-  ('Advanced', 50);
+        ('Usagi','Usagi is survival itself: athletic, fearless, and 
+        emotionally grounded. At 40 points, you unlock a profile 
+        representing peak stamina, courage, and the will to keep going.',40),
 
-INSERT INTO CommunityGroup (name, description) VALUES
-  ('Team Sunrise', 'Early birds who focus on sleep and routines'),
-  ('Team Momentum', 'Fitness and productivity crew');
+        ('Arisu','Arisu is the core player — a problem-solver who grows 
+        into leadership through pain and sacrifice. At 50 points, you 
+        unlock the profile of someone who survives by thinking, not luck.',50),
+        
+        ('Mira','Mira is the endgame: charismatic, intelligent, and 
+        terrifyingly calm. At 100 points, you unlock the highest tier,
+        a profile that symbolizes control, power, and final-boss energy.',100);
 
-INSERT INTO PlayerProfile (user_id, group_id, level_id) VALUES
-  (1, 1, 1),
-  (2, 2, 1),
-  (3, 1, 2);
+      INSERT INTO CommunityGroup (name, description) VALUES
+      ('Team Sunrise', 'Early birds who focus on sleep and routines'),
+      ('Team Momentum', 'Fitness and productivity crew'),
+      ('The Beach Squad', 'Social-driven team: consistency + community challenges'),
+      ('Spade Runners', 'Endurance and cardio grinders (walks, runs, stamina)'),
+      ('Heart Keepers', 'Mental wellness + social connection (journaling, check-ins)'),
+      ('Diamond Minds', 'Focus and discipline (study blocks, digital detox, deep work)'),
+      ('Club Crew', 'Balanced players: mix of strength, sleep, and productivity'),
+      ('Wolf Pack', 'Hardcore challengers chasing max points daily'),
+      ('Silent Steps', 'Low-key team: consistency over intensity'),
+      ('Iron Resolve', 'Strength + resilience focused (pushups, gym, training)'),
+      ('Zen Circle', 'Mindfulness and recovery: stretch, breathe, meditate'),
+      ('Borderland Veterans', 'Experienced players: strategic point farming');
 
-INSERT INTO CompetitionSeason (name, start_date, end_date) VALUES
-  ('Season 1', '2026-01-01', '2026-01-31');
+        INSERT INTO UserProfile (user_id, group_id) VALUES
+        (1, 1),
+        (2, 1),
+        (3, 1),
+        (4, 1),
+        (5, 2),
+        (6, 2),
+        (7, 2),
+        (8, 2),
+        (9, 3),
+        (10, 3),
+        (11, 4),
+        (12, 5);
 
-INSERT INTO GroupMatch (group_a_id, group_b_id, season_id, match_date) VALUES
-  (1, 2, 1, '2026-01-05');
+      INSERT INTO GroupMatch (group_a_id, group_b_id, season_id, match_date) VALUES
+        (1, 2, 1, '2026-01-05');
 
-INSERT INTO Achievement (name, description) VALUES
-  ('First Steps', 'Complete your first wellness challenge'),
-  ('Shopper', 'Buy your first shop item'),
-  ('Daily Regular', 'Claim daily reward at least once'),
-  ('First Match', 'Play 1 match'),
-  ('Veteran', 'Play 50 matches'),
-  ('Legend', 'Play 100 matches');
+      INSERT INTO ShopItem (name, description, cost, power) VALUES
+      ('Visa Extension Card', 'Extends your survival time in the Borderland.', 20, 5),
+      ('Heart Suit Token', 'A mysterious token tied to emotional trials and trust-based games.', 15, 3),
+      ('Arena Access Pass', 'Grants access to high-risk, high-reward group matches in the Borderland.', 30, 7),
+      ('Face Card Relic', 'A powerful artifact rumored to be linked to the Face Card rulers.', 45, 12),
+      ('Borderland Beacon', 'A glowing beacon that signals allies across the wasteland.', 40, 10);
 
-INSERT INTO UserAchievement (user_id, achievement_id) VALUES
-  (1, 1);
+      INSERT INTO UserInventory (user_id, item_id, quantity) VALUES
+        (1, 1, 1),
+        (1, 3, 1),
+        (2, 2, 1),
+        (2, 3, 1),
+        (3, 1, 1),
+        (3, 3, 1),
+        (4, 4, 1),
+        (5, 5, 1);
 
-INSERT INTO ShopItem (name, description, cost, power) VALUES
-  ('Energy Drink', 'Boost your vibe for the day', 20, 5),
-  ('Focus Snack', 'A small snack to stay locked in', 15, 3),
-  ('Gym Pass', 'Motivation to get moving', 30, 7);
-
-INSERT INTO UserInventory (user_id, item_id, quantity) VALUES
-  (1, 1, 2),
-  (2, 2, 1);
-
-INSERT INTO DailyClaim (user_id, last_claimed_at) VALUES
-  (1, '2026-01-03 09:00:00'),
-  (2, NULL),
-  (3, NULL);
-
-INSERT INTO UserToken (user_id, tokens) VALUES
-(1, 0),
-(2, 0),
-(3, 0);
-`;
+      `;
 
     pool.query(SQLSTATEMENT, callback);
   }
