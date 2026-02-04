@@ -11,9 +11,9 @@ const groupRoutes = require('./groupRoutes');
 const matchRoutes = require('./matchRoutes');
 const profileRoutes = require("./profileRoutes");
 const shopRoutes = require("./shopRoutes");
-const dailyClaimRoutes = require("./dailyClaimRoutes");
 const inventoryRoutes = require("./inventoryRoutes");
 const authRoutes = require("./authRoutes");
+const leaderboardRoutes = require("./leaderboardRoutes");
 
 // Use Routes
 router.use("/users", userRoutes);
@@ -24,7 +24,7 @@ router.use("/profiles", profileRoutes);
 router.use("/groups", groupRoutes);
 router.use("/matches", matchRoutes);
 router.use("/shop", shopRoutes);
-router.use("/daily-claim", dailyClaimRoutes);
+router.use("/leaderboard", leaderboardRoutes);
 router.use("/inventory", inventoryRoutes);
 router.use("/auth", authRoutes);
 

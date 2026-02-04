@@ -115,6 +115,21 @@
       </div>
     </div>
 
+<div class="text-center my-4">
+  <button id="leaderboardBtn" class="btn btn-primary">
+    View Leaderboard
+  </button>
+</div>
+
+<div id="leaderboardSection" class="d-none">
+  <div class="card mx-auto" style="max-width: 500px;">
+    <div class="card-body">
+      <h5 class="text-center mb-3">Top 10 Players</h5>
+      <ul id="leaderboardList" class="list-group list-group-flush"></ul>
+    </div>
+  </div>
+</div>
+
   </main>
 
   <!-- Bootstrap JS -->
@@ -127,7 +142,9 @@
           crossorigin="anonymous"></script>
 
   <!-- Scripts -->
+  <script src="js/getCurrentURL.js"></script>
   <script src="js/navbar.js"></script>
   <script src="js/userNavbarToggle.js"></script>
+  <script src="js/leaderboard.js"></script>
 </body>
 </html>

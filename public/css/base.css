@@ -1,0 +1,77 @@
+/* base.css */
+/* Global variables (shared)*/
+:root{
+  --border: rgba(255,255,255,0.10);
+  --text: #e5e7eb;
+  --muted: rgba(229,231,235,0.70);
+  --shadow: 0 18px 55px rgba(0,0,0,0.45);
+  --radius: 16px;
+}
+
+/*Reset / layout foundation*/
+*{ box-sizing: border-box; }
+
+html, body{ height: 100%; }
+
+body{
+  margin: 0;
+  color: var(--text);
+}
+
+/* App layer above background */
+.app{
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+}
+
+/* Content spacing */
+main{
+  padding-top: 18px;
+  padding-bottom: 30px;
+}
+
+/*Generic Cards (site-wide)*/
+.card{
+  background: rgba(6, 26, 44, 0.78);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.card .card-body{
+  padding: 16px;
+  color: #ffffff;
+}
+
+.card-title{
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/*Alerts (site-wide)*/
+.alert{
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.alert-danger{
+  background: rgba(255, 62, 96, 0.12);
+  color: #ffd0d8;
+}
+
+/*Links (site-wide)*/
+a{
+  color: rgba(255, 150, 170, 0.95);
+  text-decoration: none;
+}
+
+a:hover{
+  text-decoration: underline;
+}
+
+/* Disable hover underline for brand only */
+.navbar-brand:hover{
+  text-decoration: none !important;
+}

@@ -1,10 +1,32 @@
 /* =========================
+   AUTH PAGES (LOGIN / REGISTER)
+   ========================= */
+
+body.auth-page {
+  background: #000 !important;
+}
+
+/* Gothic Game Title Font */
+.game-title,
+.profile-panel h2,
+.profile-panel h1 {
+  font-family: 'UnifrakturMaguntia', cursive;
+  font-size: 70px;
+}
+
+.navbar,
+.navbar .navbar-brand,
+.navbar .nav-link {
+  font-family: 'UnifrakturMaguntia', cursive;
+  letter-spacing: 0.08em;
+}
+
+/* =========================
    Authentication Forms
    ========================= */
 
 .auth-wrapper {
   min-height: calc(100vh - 80px);
-  /* leave space for navbar */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,13 +36,35 @@
 .auth-card {
   width: 100%;
   max-width: 420px;
-  background: rgba(6, 26, 44, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 20px;
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(14px);
+  background: rgba(6, 10, 22, 0.88);
+  border-radius: 24px;
   padding: 28px 26px 30px;
   color: #e5e7eb;
+  backdrop-filter: blur(12px);
+  position: relative;
+
+  /* Neon red border */
+  border: 2px solid rgba(255, 60, 80, 0.7);
+
+  /* Glow + depth */
+  box-shadow:
+    0 0 20px rgba(255, 60, 80, 0.35),
+    0 0 50px rgba(255, 60, 80, 0.2),
+    0 25px 70px rgba(0, 0, 0, 0.7);
+
+  animation: floatCard 3s ease-in-out infinite;
+}
+
+/* Soft glow outline */
+.auth-card::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 26px;
+  border: 2px solid rgba(255, 80, 100, 0.5);
+  filter: blur(10px);
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 .auth-card h3 {
@@ -53,23 +97,11 @@
   font-weight: 700;
 }
 
+/* Floating motion */
 @keyframes floatCard {
-  0% {
-    transform: translateY(0px) rotate(0deg);
-  }
-
-  50% {
-    transform: translateY(-18px) rotate(0.5deg);
-  }
-
-  100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-}
-
-/* Faster + more noticeable */
-.auth-card {
-  animation: floatCard 3s ease-in-out infinite;
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-18px); }
+  100% { transform: translateY(0px); }
 }
 
 /* =========================
@@ -93,36 +125,107 @@
   gap: 24px;
 }
 
-/* Floating panels */
+/* Floating panels — SAME glass style as banner */
 .profile-panel {
-  background: rgba(6, 26, 44, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 20px;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.65);
-  padding: 24px;
+  background: rgba(6, 10, 22, 0.88);
+  border-radius: 26px;
   color: #fff;
   backdrop-filter: blur(12px);
+  position: relative;
+  margin-bottom: 20px;
+
+  /* Make profile panels bigger (more breathing space) */
+  padding: 34px;
+  min-height: 300px;
+
+  /* Glow + depth */
+  box-shadow:
+    0 0 25px rgba(255, 60, 80, 0.4),
+    0 0 60px rgba(255, 60, 80, 0.25),
+    0 30px 90px rgba(0, 0, 0, 0.9);
 }
 
-/* Slight offset so both don't float in sync */
-.profile-panel.right {
-  animation-delay: 2s;
+/* Soft glowing outline */
+.profile-panel::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 28px;
+  border: 2px solid rgba(255, 80, 100, 0.5);
+  filter: blur(10px);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Avatar circle */
+.profile-avatar-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+
+/* Wrapper: remove any box look */
+.avatar-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+
+  /* HOVER MOTION */
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.avatar-wrap:hover {
+  transform: translateY(-8px) scale(1.03);
+  filter: brightness(1.05);
+}
+
+.profile-avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: contain;
+
+  /* Glow effect instead of box */
+  box-shadow:
+    0 0 25px rgba(255, 80, 100, 0.5),
+    0 0 60px rgba(255, 80, 100, 0.35),
+    0 20px 60px rgba(0, 0, 0, 0.8);
 }
 
 /* Titles */
 .profile-panel h2 {
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: -0.02em;
   margin-bottom: 16px;
+  font-size: 2.7rem;
 }
 
-/* Info blocks */
+/* Info blocks — glass look */
 .info-box {
   background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 14px 16px;
   margin-bottom: 12px;
+  position: relative;
+}
+
+/* Info boxes hover motion */
+.info-box {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.info-box:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow:
+    0 0 20px rgba(255, 80, 100, 0.4),
+    0 18px 45px rgba(0, 0, 0, 0.75);
 }
 
 .info-label {
@@ -142,34 +245,44 @@
   gap: 16px;
 }
 
+/* Inventory items — keep same vibe */
 .inventory-item {
   background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 14px;
   text-align: center;
   transition: 0.25s ease;
+  position: relative;
+
+  border: 1px solid rgba(255, 80, 100, 0.6);
+
+  box-shadow:
+    0 0 12px rgba(255, 80, 100, 0.25),
+    0 12px 35px rgba(0, 0, 0, 0.6);
+
+  height: 180px;                 /* ALL boxes same height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;      /* vertical center */
+  align-items: center;         /* horizontal center */
+  text-align: center;
 }
 
+
+
 .inventory-item:hover {
-  transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
+  transform: translateY(-6px) scale(1.05);
+  box-shadow:
+    0 0 20px rgba(255, 80, 100, 0.4),
+    0 20px 50px rgba(0, 0, 0, 0.8);
 }
 
 
 /* Floating animation */
 @keyframes floatPanel {
-  0% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-14px);
-  }
-
-  100% {
-    transform: translateY(0px);
-  }
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-14px); }
+  100% { transform: translateY(0px); }
 }
 
 /* Responsive */
@@ -178,3 +291,20 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* =========================
+   Inventory Hover Motion (Cards)
+   ========================= */
+
+#inventoryList .card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+#inventoryList .card:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow:
+    0 0 20px rgba(255, 80, 100, 0.4),
+    0 25px 60px rgba(0, 0, 0, 0.8);
+}
+

@@ -1,27 +1,36 @@
-/* =========================
-   Borderland Theme: Layout
-   ========================= */
-
-:root{
-  --border: rgba(255,255,255,0.10);
-  --text: #e5e7eb;
-  --muted: rgba(229,231,235,0.70);
-  --shadow: 0 18px 55px rgba(0,0,0,0.45);
-  --radius: 16px;
-}
-
-*{ box-sizing: border-box; }
-
-html, body{
-  height: 100%;
-}
-
+/* Base page background + base font choice lives here */
 body{
-  margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  color: var(--text);
-  background: url('https://raw.githubusercontent.com/SahanaSP19/images/refs/heads/main/borderland%20background.jpg') no-repeat center center fixed;
-  background-size: cover;
+  font-family: 'Tinos', serif; /* NEW FONT for all text */
+  letter-spacing: 0.08em;
+  background:
+    url("https://raw.githubusercontent.com/SahanaSP19/images/a1d4699e062ebadf95d3fc76fabe59da0586434a/borderland%20characters%20no%20bg.png")
+      center 100% / max(60vw, 1425px) no-repeat fixed,
+    url("https://raw.githubusercontent.com/SahanaSP19/images/39fa2443e44b2b21940b0c99fbb291923d4b47b2/borderland3.png")
+      center / cover no-repeat fixed;
+}
+
+h1, h2, h3 {
+    font-family: 'UnifrakturMaguntia', serif; /* titles */
+}
+
+.navbar {
+    font-family: 'UnifrakturMaguntia', sans-serif; /* navbar */
+}
+
+
+body.bg-matches {
+  background:
+    url("https://raw.githubusercontent.com/SahanaSP19/images/760db0d050445e8ad2b599cb74bd8d32c7548085/alice%20in%20borderland%20arena.png") center 25% / cover no-repeat fixed;
+}
+
+body.bg-shop {
+  background:
+    url("https://raw.githubusercontent.com/SahanaSP19/images/c52812f5e114997c9972770d303f589fc0766cd6/alice%20in%20borderland%20shop.png") center 45% / cover no-repeat fixed;
+}
+
+body.bg-challenges{
+   background:
+    url("https://raw.githubusercontent.com/SahanaSP19/images/c07e46236a110ede62c1a78bad9a1e38e9ce696d/challenges%20bg%20alice%20in%20borderland.png") center 35% / cover no-repeat fixed;
 }
 
 /* App layer above background */
@@ -59,7 +68,6 @@ main{
   letter-spacing: -0.02em;
 }
 
-
 /* =========================
    Alerts
    ========================= */
@@ -74,18 +82,7 @@ main{
   color: #ffd0d8;
 }
 
-/* =========================
-   Badges
-   ========================= */
 
-.badge{
-  border-radius: 999px !important;
-  font-weight: 800;
-  letter-spacing: 0.01em;
-  border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(255,255,255,0.06) !important;
-  color: var(--text) !important;
-}
 
 /* =========================
    Links
@@ -98,4 +95,906 @@ a{
 
 a:hover{
   text-decoration: underline;
+}
+
+/* Disable hover underline for brand only */
+.navbar-brand:hover {
+  text-decoration: none !important;
+}
+
+
+/* =========================
+   HERO BANNER CONTROL
+   ========================= */
+
+.banner-panel {
+  margin-top: 230px;       /* moves banner LOWER */
+  padding: 50px 10px;     /* controls banner HEIGHT */
+  width: 100%;
+
+  /* FLOATING ANIMATION */
+  animation: floatBanner 3s ease-in-out infinite;
+}
+
+/* Neon framed banner box */
+.banner-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+
+  background: rgba(6, 10, 22, 0.88);
+  border-radius: 26px;
+  padding: 60px 50px;
+  position: relative;
+
+  /* Glow + depth */
+  box-shadow:
+    0 0 25px rgba(255, 60, 80, 0.4),
+    0 0 60px rgba(255, 60, 80, 0.25),
+    0 30px 90px rgba(0, 0, 0, 0.9);
+}
+
+/* Soft glowing outline */
+.banner-content::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 28px;
+  border: 2px solid rgba(255, 80, 100, 0.5);
+  filter: blur(10px);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Centers and sizes the GIF */
+.gif-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.banner-gif {
+  max-width: 300px;   /* change size here */
+  height: auto;
+}
+
+/* Homepage title: always visible */
+.home-title {
+  font-family: 'UnifrakturMaguntia', serif;
+  font-size: 70px;
+  color: #fff !important;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.85);
+  margin-top: 10px;
+  z-index: 3;
+  position: relative;
+}
+
+/* =========================
+   FLOATING ANIMATION
+   ========================= */
+@keyframes floatBanner {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-18px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Leaderboard container */
+.leaderboardSection {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  padding: 2rem 1rem;
+  color: #ffffff;
+}
+
+.leaderboard-box {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.leaderboard-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+}
+
+
+/* =========================
+   FLIP POKER CARDS (Challenges)
+   ========================= */
+
+/* Adds spacing between cards */
+#challengeList {
+  row-gap: 60px;
+}
+
+/* Points Badge (Big + Bold) */
+
+#pointsBadge {
+  font-size: 1.3rem;        /* makes text bigger */
+  padding: 14px 22px;      /* makes the pill bigger */
+  border-radius: 15px;   /* keeps it rounded */
+  font-weight: 900;
+  letter-spacing: 0.08em;
+
+  background: rgba(6, 10, 22, 0.88) !important;
+
+  box-shadow:
+    0 0 18px rgba(255, 80, 100, 0.45),
+    0 0 40px rgba(255, 80, 100, 0.25),
+    0 12px 35px rgba(0, 0, 0, 0.8);
+}
+
+/* Card wrapper */
+.flip-card {
+  width: 86%;
+  height: 300px; /* control overall size */
+  animation: floatCard 3s ease-in-out infinite
+}
+
+.flip-inner {
+  position: relative;
+  width: 120%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.65s ease;
+  border-radius: 18px;
+}
+
+.flip-card.is-flipped .flip-inner {
+  transform: rotateY(180deg);
+}
+
+/* Front/Back faces */
+.flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* Poker card BACK (shown first) */
+.flip-front {
+  background: url("https://github.com/SahanaSP19/images/blob/main/poker%20card%20red.png?raw=true")
+    center / cover no-repeat;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 10px;
+}
+
+/* Poker card FACE (revealed) */
+.flip-back {
+  transform: rotateY(180deg);
+  background: #fdfdfd;     /* white poker face */
+  color: #111;             /* dark text */
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Dark blue theme for poker card actions */
+.flip-back .badge {
+  background: rgba(5, 98, 190, 0.78)!important;
+  border: 1px solid rgba(6, 26, 44, 1);
+  color: #ffffff !important;
+  font-weight: 800;
+}
+
+/* Complete button (blue theme) */
+.flip-back .btn {
+  background: rgba(5, 98, 190, 0.78);
+  border: 1px solid rgba(6, 26, 44, 1);
+  color: #ffffff;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.flip-back .btn:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+  background: #e04048;
+}
+
+/* Dark red error box inside flip cards */
+.flip-back .alert-danger {
+  background: rgba(90, 10, 20, 0.9) !important;
+  border: 1px solid rgba(255, 80, 80, 0.8) !important;
+  color: #ffd6d6 !important;
+  box-shadow: 0 0 15px rgba(255, 60, 60, 0.35);
+}
+
+/* Ensure text inside face is readable */
+.flip-back h5,
+.flip-back p,
+.flip-back label,
+.flip-back .card-title-face,
+.flip-back .card-reward,
+.flip-back .card-corner {
+  color: #111 !important;
+}
+
+/* Floating arena motion */
+@keyframes floatCard {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* =========================
+   Matches Page
+   ========================= */
+
+.group-card {
+  background: rgba(6, 10, 22, 0.88);
+  border-radius: 18px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6);
+  transition: 0.25s ease;
+}
+
+.group-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow:
+    0 0 20px rgba(255, 80, 100, 0.4),
+    0 30px 80px rgba(0, 0, 0, 0.8);
+}
+
+/* =========================
+   MATCHES: GROUP CARDS LAYOUT
+   ========================= */
+
+/* More even spacing between group cards */
+#groupsList {
+  row-gap: 20px;
+}
+
+/* Group card itself */
+.group-card {
+  background:rgba(6, 10, 22, 0.88);
+  border-radius: 20px;
+  padding: 16px;                 /* smaller box */
+  color: #fff;
+  backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 0 16px rgba(255, 60, 80, 0.28),
+    0 0 40px rgba(255, 60, 80, 0.18),
+    0 18px 55px rgba(0, 0, 0, 0.75);
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: floatGroup 3s ease-in-out infinite;
+}
+
+/* Make the description/details white (yours were black) */
+.group-card p,
+.group-card .text-muted,
+.group-card small {
+  color: rgba(229, 231, 235, 0.88) !important;
+}
+
+/* Hover motion */
+.group-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow:
+    0 0 20px rgba(255, 60, 80, 0.35),
+    0 0 60px rgba(255, 60, 80, 0.22),
+    0 24px 70px rgba(0, 0, 0, 0.85);
+}
+
+/* Floating animation */
+@keyframes floatGroup {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+/* =========================
+   MATCHES: Group Cards
+   ========================= */
+
+.group-card{
+  background: rgba(6, 10, 22, 0.88);
+  border-radius: 22px;
+  padding: 18px 16px;
+  color: #fff;
+  backdrop-filter: blur(12px);
+  position: relative;
+
+  box-shadow:
+    0 0 18px rgba(255, 60, 80, 0.25),
+    0 0 45px rgba(255, 60, 80, 0.18),
+    0 26px 70px rgba(0, 0, 0, 0.78);
+
+  animation: floatGroupCard 3s ease-in-out infinite;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.group-card:hover{
+  transform: translateY(-8px) scale(1.02);
+  box-shadow:
+    0 0 22px rgba(255, 60, 80, 0.35),
+    0 0 55px rgba(255, 60, 80, 0.22),
+    0 34px 90px rgba(0, 0, 0, 0.85);
+}
+
+@keyframes floatGroupCard{
+  0%{ transform: translateY(0px); }
+  50%{ transform: translateY(-12px); }
+  100%{ transform: translateY(0px); }
+}
+
+/* Icon styling */
+.group-icon{
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+  color: rgba(255, 80, 100, 0.92);
+  text-shadow:
+    0 0 12px rgba(255, 80, 100, 0.50),
+    0 0 24px rgba(255, 80, 100, 0.30);
+}
+
+/* Ensure group description is white (not Bootstrap-muted) */
+.group-desc{
+  color: rgba(255,255,255,0.90) !important;
+}
+
+/* Members badge */
+.group-members{
+  display: inline-block;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-weight: 800;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+}
+
+/* =========================
+   MATCH ARENA TALL CARDS
+   ========================= */
+
+.arena-tall {
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Match group box styling */
+.arena-group-box {
+  background: rgba(6, 10, 22, 0.88);
+  border-radius: 26px;
+  padding: 40px 30px;
+  position: relative;
+  color: #fff;
+
+  box-shadow:
+    0 0 25px rgba(255, 60, 80, 0.35),
+    0 0 60px rgba(255, 60, 80, 0.25),
+    0 30px 80px rgba(0, 0, 0, 0.9);
+
+  animation: floatArena 3s ease-in-out infinite;
+}
+
+/* Soft neon outline */
+.arena-group-box::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 28px;
+  border: 2px solid rgba(255, 80, 100, 0.5);
+  filter: blur(10px);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Floating motion */
+@keyframes floatArena {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0px); }
+}
+
+/* =========================
+   BOTTOM MATCH POPUP
+   ========================= */
+
+.arena-popup {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 300px;
+  max-width: 90vw;
+
+  background: rgba(6, 10, 22, 0.95);
+  color: #fff;
+  padding: 18px 26px;
+  border-radius: 18px;
+  text-align: center;
+  font-weight: 800;
+  z-index: 9999;
+
+  box-shadow:
+    0 0 20px rgba(255, 60, 80, 0.4),
+    0 0 50px rgba(255, 60, 80, 0.25),
+    0 20px 60px rgba(0, 0, 0, 0.9);
+
+  animation: popupSlide 0.4s ease-out;
+}
+
+/* Slide-in animation */
+@keyframes popupSlide {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* =========================
+   Exit Arena Button (Centered)
+   ========================= */
+
+.arena-exit-center {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+  z-index: 5;
+}
+
+.arena-exit-center .btn {
+  border-radius: 14px;
+  font-weight: 800;
+  box-shadow:
+    0 0 12px rgba(255, 60, 80, 0.4),
+    0 10px 35px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.arena-exit-center .btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow:
+    0 0 20px rgba(255, 60, 80, 0.6),
+    0 18px 45px rgba(0, 0, 0, 0.9);
+}
+
+#itemList .card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#itemList .card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+}
+
+/* =========================
+   SHOP: Orb Cards (fixed layout)
+   ========================= */
+
+.shop-orb {
+  background: rgba(6, 10, 22, 0.88);
+
+  /* Make it a tall capsule instead of a perfect circle */
+  border-radius: 60px;
+  padding: 14px;
+  position: relative;
+
+  box-shadow:
+    0 0 18px rgba(255, 60, 80, 0.25),
+    0 0 45px rgba(255, 60, 80, 0.18),
+    0 26px 70px rgba(0, 0, 0, 0.78);
+
+  animation: floatShop 3s ease-in-out infinite;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  /* Control the card size so everything stays inside */
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.shop-orb:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow:
+    0 0 22px rgba(255, 60, 80, 0.35),
+    0 0 55px rgba(255, 60, 80, 0.22),
+    0 34px 90px rgba(0, 0, 0, 0.85);
+}
+
+.shop-orb-inner {
+  background: rgba(6, 26, 44, 0.72);
+
+  /* Match outer shape */
+  border-radius: 54px;
+
+  padding: 22px 18px;
+
+  /* Make it taller so button never leaks out */
+  min-height: 380px;
+
+  display: flex;
+  flex-direction: column;
+
+  /* Keep everything inside */
+  overflow: hidden;
+}
+
+/* Center the content better */
+.shop-title {
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  text-align: center;
+  color: #fff;
+  font-size: 1.25rem;
+}
+
+.shop-desc {
+  color: rgba(229, 231, 235, 0.85);
+  text-align: center;
+  margin-bottom: 14px;
+
+  /* Prevent long text from wrecking the layout */
+  font-size: 0.95rem;
+  line-height: 1.25rem;
+}
+
+.shop-meta {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 2px 0 16px;
+  flex-wrap: wrap;
+}
+
+.shop-pill {
+  border-radius: 999px;
+  padding: 7px 11px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  font-size: 0.9rem;
+
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(229, 231, 235, 0.92);
+}
+
+/* Keep button inside and make it a bit smaller */
+.shop-actions {
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.shop-actions .btn {
+  padding: 10px 14px;
+  font-size: 1rem;
+  border-radius: 16px;
+}
+
+/* Card-level error styling */
+.shop-card-error.alert-danger {
+  background: rgba(90, 10, 20, 0.9) !important;
+  border: 1px solid rgba(255, 80, 80, 0.8) !important;
+  color: #ffd6d6 !important;
+  box-shadow: 0 0 15px rgba(255, 60, 60, 0.35);
+}
+
+@keyframes floatShop {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0px); }
+}
+
+/* =========================
+   Characters Page
+   ========================= */
+
+.character-shell{
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 5px;
+  align-items: stretch;
+}
+
+/* LEFT LIST */
+.character-list{
+  background: rgba(6, 10, 22, 0.88);
+  border-radius: 22px;
+  padding: 18px;
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 0 25px rgba(255, 60, 80, 0.25),
+    0 25px 70px rgba(0,0,0,0.85);
+  height: 100%;
+}
+
+.character-list-title{
+  font-family: 'UnifrakturMaguntia', serif;
+  font-size: 32px;
+  letter-spacing: 0.05em;
+  margin-bottom: 14px;
+  color: #fff;
+}
+
+/* list items */
+.char-list-item{
+  width: 100%;
+  text-align: left;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 16px;
+  padding: 12px 12px;
+  margin-bottom: 10px;
+  color: #fff;
+  transition: 0.2s ease;
+  cursor: pointer;
+}
+
+.char-list-item:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 0 18px rgba(255,80,100,0.25);
+}
+
+.char-list-item.active{
+  border-color: rgba(255,80,100,0.6);
+  box-shadow:
+    0 0 20px rgba(255,80,100,0.35),
+    0 0 45px rgba(255,80,100,0.18);
+}
+
+.char-list-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.char-list-name{
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.char-list-sub{
+  font-size: 0.85rem;
+  opacity: 0.8;
+  margin-top: 3px;
+}
+
+.char-list-pill{
+  font-size: 0.75rem;
+  font-weight: 800;
+  border-radius: 999px;
+  padding: 4px 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+}
+
+.char-list-pill.unlocked{ color: #bfffd3; }
+.char-list-pill.locked{ color: #ffd0d8; }
+
+/* MAIN PANEL */
+.character-panel{
+  position: relative;
+  overflow: hidden;
+  background: rgba(6, 10, 22, 0.88);
+  border-radius: 26px;
+  padding: 26px;
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 0 25px rgba(255, 60, 80, 0.25),
+    0 25px 70px rgba(0,0,0,0.85);
+  min-height: 520px;
+}
+
+.character-panel-top{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.char-name{
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.char-tier{
+  opacity: 0.85;
+  margin-top: 4px;
+}
+
+.char-badges{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.char-badge{
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-weight: 900;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+}
+
+.char-badge.good{
+  box-shadow: 0 0 16px rgba(80,255,140,0.18);
+  color: #bfffd3;
+}
+
+.char-badge.bad{
+  box-shadow: 0 0 16px rgba(255,80,100,0.22);
+  color: #ffd0d8;
+}
+
+.char-desc{
+  margin-top: 16px;
+  max-width: 62%;
+  line-height: 1.6;
+  color: rgba(229,231,235,0.9);
+}
+
+.char-meta{
+  margin-top: 18px;
+  max-width: 62%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 18px;
+  padding: 14px;
+}
+
+.char-meta-row{
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+}
+
+.char-meta-label{
+  opacity: 0.8;
+}
+
+.char-meta-value{
+  font-weight: 900;
+}
+
+.char-stats{
+  margin-top: 18px;
+  max-width: 62%;
+}
+
+.stat-row{
+  margin-bottom: 12px;
+}
+
+.stat-label{
+  font-weight: 800;
+  margin-bottom: 6px;
+  opacity: 0.9;
+}
+
+.stat-track{
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.stat-fill{
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: rgba(120, 220, 255, 0.85);
+  box-shadow: 0 0 12px rgba(120,220,255,0.35);
+  transition: width 0.5s ease;
+}
+
+/* Right portrait */
+.char-portrait-wrap{
+  position: absolute;
+  right: 28px;
+  top: 90px;
+  width: min(320px, 35%);
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0.98;
+}
+
+.char-portrait {
+  width: 320px;
+  height: 600px;
+  object-fit: contain;     /* Keeps full image visible */
+  object-position: center;
+  display: block;
+  margin: 0 auto;
+}
+
+
+/* Responsive */
+@media (max-width: 992px){
+  .character-shell{
+    grid-template-columns: 1fr;
+  }
+  .char-desc, .char-meta, .char-stats{
+    max-width: 100%;
+  }
+  .char-portrait-wrap{
+    position: static;
+    width: 100%;
+    margin-top: 18px;
+  }
+}
+
+/* Floating animation (same vibe as other pages) */
+@keyframes floatCharBox {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Make the left profile buttons float */
+.char-list-item.floaty{
+  animation: floatCharBox 3s ease-in-out infinite;
+}
+
+/* Slight stagger so they don’t all float in sync */
+.char-list-item.floaty:nth-child(2){ animation-delay: .15s; }
+.char-list-item.floaty:nth-child(3){ animation-delay: .30s; }
+.char-list-item.floaty:nth-child(4){ animation-delay: .45s; }
+.char-list-item.floaty:nth-child(5){ animation-delay: .60s; }
+.char-list-item.floaty:nth-child(6){ animation-delay: .75s; }
+.char-list-item.floaty:nth-child(7){ animation-delay: .90s; }
+.char-list-item.floaty:nth-child(8){ animation-delay: 1.05s; }
+.char-list-item.floaty:nth-child(9){ animation-delay: 1.20s; }
+
+/* =========================
+   CHARACTERS: FLOAT ENTIRE PANELS
+   ========================= */
+
+@keyframes floatCharacterPanel {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Left box (profiles container) floats */
+.character-list {
+  animation: floatCharacterPanel 3s ease-in-out infinite;
+}
+
+/* Right box (info panel) floats */
+.character-panel {
+  animation: floatCharacterPanel 3s ease-in-out infinite;
 }

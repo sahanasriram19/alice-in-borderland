@@ -1,10 +1,8 @@
-/* =========================
-   Borderland Theme: Color
-   ========================= */
+/* Borderland Theme: Color*/
 
 :root{
 --accent: #ff1f3d;
---accent2: #ff6b6b;   /* softer */
+--accent2: #e2323b;   /* softer */
   --accentDark: #d92644;
 }
 
@@ -30,12 +28,20 @@
   position: relative;
 }
 
-.navbar .nav-link.active::after{
+/* make line below active page in nav small */
+.navbar .nav-link {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+}
+
+/* make line below active page in nav small */
+.navbar .nav-link.active::after {
   content: "";
   position: absolute;
-  left: 8px;
-  right: 8px;
-  bottom: 2px;
+  left: 0;
+  right: 0;
+  bottom: -2px;
   height: 2px;
   background: var(--accent);
   border-radius: 99px;
