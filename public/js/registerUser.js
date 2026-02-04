@@ -1,91 +1,85 @@
+// Event: DOMContentLoaded
 document.addEventListener("DOMContentLoaded", function () {
+  eventListeners();
+});
 
-  // DOM Elements
-  var signupForm = document.getElementById("signupForm");
-  var warningCard = document.getElementById("warningCard");
-  var warningText = document.getElementById("warningText");
+// DOM Elements
+const signupForm = document.getElementById("signupForm");
+const warningCard = document.getElementById("warningCard");
+const warningText = document.getElementById("warningText");
 
-  // Init
-  init();
+// Add all the Event Listeners
+function eventListeners() {
+  if (!signupForm) return;
 
-  function init() {
-    if (!signupForm) return;
-    bindEvents();
+  signupForm.addEventListener("submit", onSignupSubmit);
+}
+
+function onSignupSubmit(event) {
+  event.preventDefault();
+  clearWarning();
+
+  const formData = readFormValues();
+  const error = validateSignup(formData.username, formData.email, formData.password, formData.confirmPassword);
+
+  if (error) {
+    showWarning(error);
+    return;
   }
 
-  // Events
-  function bindEvents() {
-    signupForm.addEventListener("submit", onSignupSubmit);
-  }
+  submitSignup(formData);
+}
 
-  function onSignupSubmit(event) {
-    event.preventDefault();
-    clearWarning();
+// Form Helpers
+function readFormValues() {
+  return {
+    username: document.getElementById("username").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    password: document.getElementById("password").value,
+    confirmPassword: document.getElementById("confirmPassword").value
+  };
+}
 
-    var formData = readFormValues();
-    var error = validateSignup(
-      formData.username,
-      formData.email,
-      formData.password,
-      formData.confirmPassword
-    );
+function validateSignup(username, email, password, confirmPassword) {
+  if (!username) return "Username is required.";
+  if (!email) return "Email is required.";
+  if (!password) return "Password is required.";
+  if (password !== confirmPassword) return "Passwords do not match.";
+  return null;
+}
 
-    if (error) {
-      showWarning(error);
+// UI Feedback
+function showWarning(text) {
+  if (!warningCard || !warningText) return;
+  warningText.innerText = text;
+  warningCard.classList.remove("d-none");
+}
+
+function clearWarning() {
+  if (!warningCard || !warningText) return;
+  warningCard.classList.add("d-none");
+  warningText.innerText = "";
+}
+
+// API
+function submitSignup(formData) {
+  const data = {
+    username: formData.username,
+    email: formData.email,
+    password: formData.password
+  };
+
+  const callback = function (status, payload) {
+    if (status === 200 && payload && payload.token) {
+      localStorage.setItem("token", payload.token);
+      window.location.href = "profile.html";
       return;
     }
 
-    submitSignup(formData);
-  }
+    showWarning((payload && payload.message) || "Signup failed.");
+  };
 
-  // Form Helpers
-  function readFormValues() {
-    return {
-      username: document.getElementById("username").value.trim(),
-      email: document.getElementById("email").value.trim(),
-      password: document.getElementById("password").value,
-      confirmPassword: document.getElementById("confirmPassword").value
-    };
-  }
+  fetchMethod(currentUrl + "/api/auth/register", callback, "POST", data);
 
-  // UI Feedback
-  function showWarning(text) {
-    if (!warningCard || !warningText) return;
-    warningText.innerText = text;
-    warningCard.classList.remove("d-none");
-  }
-
-  function clearWarning() {
-    if (!warningCard || !warningText) return;
-    warningCard.classList.add("d-none");
-    warningText.innerText = "";
-  }
-
-  // API
-  function submitSignup(formData) {
-    var payload = {
-      username: formData.username,
-      email: formData.email,
-      password: formData.password
-    };
-
-    const callback = function (status, data) {
-      if (status === 200 && data && data.token) {
-        localStorage.setItem("token", data.token);
-        window.location.href = "profile.html";
-        return;
-      }
-
-      showWarning((data && data.message) || "Signup failed.");
-    };
-
-    fetchMethod(
-      currentUrl + "/api/auth/register",
-      callback,
-      "POST",
-      payload
-    );
-
-    signupForm.reset();
-  }
-});
+  signupForm.reset();
+}

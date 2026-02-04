@@ -1,35 +1,40 @@
-document.addEventListener("DOMContentLoaded", function () {
-
-  function getBootstrapModal(modalEl) {
-    if (!modalEl || typeof bootstrap === "undefined" || !bootstrap.Modal) return null;
-
-    var instance = bootstrap.Modal.getInstance(modalEl);
-
-    if (!instance) instance = new bootstrap.Modal(modalEl);
-    
-    return instance;
+function getBootstrapModal(modalEl) {
+  if (!modalEl || typeof bootstrap === "undefined" || !bootstrap.Modal) {
+    return null;
   }
 
-  function open(modalId) {
-    var modalEl = document.getElementById(modalId);
-    var instance = getBootstrapModal(modalEl);
-    if (!instance) {
-      console.error("Bootstrap modal not available or modal element missing:", modalId);
-      return;
-    }
-    instance.show();
+  let instance = bootstrap.Modal.getInstance(modalEl);
+
+  if (!instance) {
+    instance = new bootstrap.Modal(modalEl);
   }
 
-  function close(modalId) {
-    var modalEl = document.getElementById(modalId);
-    var instance = getBootstrapModal(modalEl);
-    if (!instance) return;
-    instance.hide();
+  return instance;
+}
+
+function open(modalId) {
+  const modalEl = document.getElementById(modalId);
+  const instance = getBootstrapModal(modalEl);
+
+  if (!instance) {
+    console.error("Bootstrap modal missing:", modalId);
+    return;
   }
 
-  window.AppModals = {
-    getBootstrapModal: getBootstrapModal,
-    open: open,
-    close: close
-  };
-});
+  instance.show();
+}
+
+function close(modalId) {
+  const modalEl = document.getElementById(modalId);
+  const instance = getBootstrapModal(modalEl);
+
+  if (!instance) return;
+
+  instance.hide();
+}
+
+window.AppModals = {
+  getBootstrapModal,
+  open,
+  close
+};
