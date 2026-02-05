@@ -865,10 +865,11 @@ Users unlock characters as they accumulate points:
 **Start the backend server**
 ```bash
 # Development mode with auto-reload
-npm run dev
+npm install express mysql2 dotenv nodemon 
 
 # Production mode
-npm start
+npm run init_tables
+npm run dev
 ```
 
 The backend API will be available at `http://localhost:3000`
