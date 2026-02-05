@@ -40,7 +40,8 @@ bcrypt.hash('1234', saltRounds, (error, hash) => {
         created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         last_login_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        points INT DEFAULT 0
+        points INT DEFAULT 0,
+        current_level_id INT DEFAULT 1
       );
 
       CREATE TABLE WellnessChallenge (
@@ -100,20 +101,20 @@ bcrypt.hash('1234', saltRounds, (error, hash) => {
         UNIQUE KEY unique_user_item (user_id, item_id)
       );
 
-      INSERT INTO User (username, email, password, points) VALUES
-        ('hannah', 'hannah@example.com', '${hash}', 5),
-        ('alice', 'alice@example.com', '${hash}', 50),
-        ('george', 'george@example.com', '${hash}', 15),
-        ('david', 'david@example.com', '${hash}', 20),
-        ('sahana', 'sahana@example.com', '${hash}', 25),
-        ('bob', 'bob@example.com', '${hash}', 30),
-        ('ivan', 'ivan@example.com', '${hash}', 33),
-        ('diana', 'diana@example.com', '${hash}', 35),
-        ('jonathan', 'jonathan@example.com', '${hash}', 40),
-        ('julia', 'julia@example.com', '${hash}', 44),
-        ('fiona', 'fiona@example.com', '${hash}', 45),
-        ('charlie', 'charlie@example.com', '${hash}', 10),
-        ('vecna', 'vecna@example.com', '${hash}', 100);
+    INSERT INTO User (username, email, password, points, current_level_id) VALUES
+        ('hannah', 'hannah@example.com', '${hash}', 5, 1),  
+        ('alice', 'alice@example.com', '${hash}', 50, 8),      
+        ('george', 'george@example.com', '${hash}', 15, 3),    
+        ('david', 'david@example.com', '${hash}', 20, 4),       
+        ('sahana', 'sahana@example.com', '${hash}', 25, 5),    
+        ('bob', 'bob@example.com', '${hash}', 30, 6),           
+        ('ivan', 'ivan@example.com', '${hash}', 33, 6),         
+        ('diana', 'diana@example.com', '${hash}', 35, 6),      
+        ('jonathan', 'jonathan@example.com', '${hash}', 40, 7), 
+        ('julia', 'julia@example.com', '${hash}', 44, 7),      
+        ('fiona', 'fiona@example.com', '${hash}', 45, 7),       
+        ('charlie', 'charlie@example.com', '${hash}', 10, 2),   
+        ('vecna', 'vecna@example.com', '${hash}', 100, 9);      
 
       INSERT INTO WellnessChallenge (creator_id, description, points) VALUES
         (1, 'Sleep like a boss - Get 7+ hours of sleep', 10),
