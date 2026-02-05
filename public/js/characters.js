@@ -117,12 +117,14 @@ function loadMyProfile(done) {
 // Load Character Levels
 function loadLevels(done) {
   const callback = function (status, payload) {
+
     if (status !== 200) {
       return done((payload && payload.message) || "Failed to load profile levels.");
     }
 
     const rows = (payload && payload.data && payload.data.profileLevels) 
     || (payload && payload.profileLevels) || [];
+
     characters = normalizeAndSort(Array.isArray(rows) ? rows : []);
     done(null);
   };

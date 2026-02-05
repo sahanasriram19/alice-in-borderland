@@ -236,6 +236,7 @@ function initialLoad() {
 
 function fetchAllChallenges(done) {
   const callback = function (status, payload) {
+
     if (status !== 200) return done(new Error((payload && payload.message) || "Failed to load challenges."));
 
     const list = (payload && payload.data && payload.data.challenge) || (payload && payload.challenge) || [];
@@ -261,7 +262,8 @@ function renderChallenges(allChallenges) {
   challengeList.innerHTML = "";
 
   if (!allChallenges || allChallenges.length === 0) {
-    challengeList.innerHTML = '<div class="col-12"><div class="card"><div class="card-body"><p class="m-0">No challenges available.</p></div></div></div>';
+    challengeList.innerHTML = 
+    '<div class="col-12"><div class="card"><div class="card-body"><p class="m-0">No challenges available.</p></div></div></div>';
     return;
   }
 
@@ -333,7 +335,9 @@ function toggleEditMode(id, isEditing) {
   if (isEditing) {
     if (displayWrap) displayWrap.classList.add("d-none");
     if (editWrap) editWrap.classList.remove("d-none");
+
   } else {
+
     if (editWrap) editWrap.classList.add("d-none");
     if (displayWrap) displayWrap.classList.remove("d-none");
   }
@@ -350,6 +354,7 @@ function syncFloatPhase(targetEl) {
 // Challenge Actions
 function completeChallenge(challengeId, details, rewardPoints) {
   const callback = function (status, payload) {
+
     if (status !== 201) return showCardError(challengeId, (payload && payload.message) || "Failed to complete challenge.");
     clearCardError(challengeId);
 
@@ -372,6 +377,7 @@ function completeChallenge(challengeId, details, rewardPoints) {
 }
 
 function markCardCompleted(challengeId, details) {
+
   completedMap.set(Number(challengeId), { challenge_id: Number(challengeId), details: details || "—" });
 
   const backFace = document.querySelector("[data-challenge-id='" + challengeId + "'] .flip-face.flip-back");
@@ -467,7 +473,8 @@ function handleCreateSubmit() {
     if (status !== 201 && status !== 200) return showCreateError((payload && payload.message) || "Failed to create challenge.");
     closeCreateModal();
 
-    const created = (payload && payload.data && (payload.data.challenge || payload.data)) || (payload && payload.challenge) || payload;
+    const created = (payload && payload.data && (payload.data.challenge || payload.data))
+    || (payload && payload.challenge) || payload;
 
     if (!created || typeof created !== "object" || !created.id) {
       initialLoad();
