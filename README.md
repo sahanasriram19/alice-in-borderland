@@ -80,6 +80,7 @@ project-root/
 │   ├── js/
 │   │   ├── utils 
 │   │   │     ├── AppModals.js     
+│   │   |     ├── token.js
 │   │   ├── challenges.js
 │   │   ├── characters.js
 │   │   ├── getCurrentURL.js
@@ -92,7 +93,6 @@ project-root/
 │   │   ├── queryCmds.js
 │   │   ├── registerUser.js
 │   │   ├── shop.js
-│   │   ├── token.js
 │   │   ├── userNavbarToggle.js
 │   ├── challenges.html
 │   ├── characters.html
