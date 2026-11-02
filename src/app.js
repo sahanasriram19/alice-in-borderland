@@ -2,6 +2,7 @@
 // INCLUDES
 //////////////////////////////////////////////////////
 const express = require('express');
+const path = require('path');
 
 //////////////////////////////////////////////////////
 // CREATE APP
@@ -11,6 +12,16 @@ const app = express();
 //////////////////////////////////////////////////////
 // USES
 //////////////////////////////////////////////////////
+// Allow the frontend to call the API even if the HTML is opened from another
+// origin (e.g. VS Code Live Server on port 5500)
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    if (req.method === 'OPTIONS') return res.sendStatus(204);
+    next();
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -23,7 +34,8 @@ app.use("/api", mainRoutes);
 //////////////////////////////////////////////////////
 // SETUP STATIC FILES
 //////////////////////////////////////////////////////
-app.use("/", express.static('public'));
+// Use an absolute path so the site loads no matter which folder you run `node` from
+app.use("/", express.static(path.join(__dirname, '..', 'public')));
 
 //////////////////////////////////////////////////////
 // EXPORT APP

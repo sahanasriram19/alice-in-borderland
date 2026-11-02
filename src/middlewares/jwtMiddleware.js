@@ -1,5 +1,5 @@
 // REQUIRE DOTENV MODULE
-require("dotenv").config();
+require("dotenv").config({ path: require("path").join(__dirname, "..", "..", ".env") });
 
 // REQUIRE JWT MODULE
 const jwt = require("jsonwebtoken");

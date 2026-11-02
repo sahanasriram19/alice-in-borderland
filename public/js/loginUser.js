@@ -1,41 +1,47 @@
+/* Run setup once the page has fully loaded */
 document.addEventListener("DOMContentLoaded", function () {
+
+  /* Get references to the form and the warning elements */
+  const loginForm   = document.getElementById("loginForm");
+  const warningCard = document.getElementById("warningCard");
+  const warningText = document.getElementById("warningText");
+
+  /* Handle the response from the login API */
   const callback = (responseStatus, responseData) => {
-    console.log("responseStatus:", responseStatus);
-    console.log("responseData:", responseData);
+
+    /* On success, store the token and redirect the user to their profile */
     if (responseStatus == 200) {
-      // Check if login was successful
+
+      /* Only proceed if the server actually returned a token */
       if (responseData.token) {
-        // Store the token in local storage
         localStorage.setItem("token", responseData.token);
-        // Redirect or perform further actions for logged-in user
         window.location.href = "profile.html";
       }
+
     } else {
+
+      /* On failure, reveal the warning card and display the server's error message */
       warningCard.classList.remove("d-none");
       warningText.innerText = responseData.message;
     }
   };
 
-  const loginForm = document.getElementById("loginForm");
-
-  const warningCard = document.getElementById("warningCard");
-  const warningText = document.getElementById("warningText");
-
+  /* Listen for the form submission event */
   loginForm.addEventListener("submit", function (event) {
-    console.log("loginForm.addEventListener");
+
+    /* Stop the browser from refreshing the page on submit */
     event.preventDefault();
 
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-
+    /* Read the username and password from their input fields */
     const data = {
-      username: username,
-      password: password,
+      username: document.getElementById("username").value,
+      password: document.getElementById("password").value
     };
-    // Perform login request
+
+    /* Send the credentials to the login endpoint */
     fetchMethod(currentUrl + "/api/auth/login", callback, "POST", data);
 
-    // Reset the form fields
+    /* Reset the form fields after submission so they are cleared */
     loginForm.reset();
   });
 });
