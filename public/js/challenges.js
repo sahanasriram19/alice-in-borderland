@@ -1,4 +1,4 @@
-/* Run initial setup functions once the page has fully loaded */
+/* Run initial setup functions once the page has fully loaded teehee*/
 document.addEventListener("DOMContentLoaded", function () {
   getToken();
   eventListeners();
