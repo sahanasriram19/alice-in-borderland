@@ -1,2 +1,2 @@
-const currentUrl = window.location.protocol + "//" + window.location.host;
+const currentUrl = API_URL;
 console.log("currentUrl:", currentUrl);

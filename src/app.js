@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 
 //////////////////////////////////////////////////////
 // CREATE APP
@@ -12,6 +13,12 @@ const app = express();
 //////////////////////////////////////////////////////
 // USES
 //////////////////////////////////////////////////////
+app.use(cors({
+  origin: [
+    'https://alice-in-borderland-bed.vercel.app', // deployed frontend
+    'http://localhost:3000'        // local testing
+  ]
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
